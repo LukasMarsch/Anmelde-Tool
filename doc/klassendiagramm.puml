@@ -1,0 +1,54 @@
+@startuml
+Anmeldung *-- Event
+Anmeldung -- AnmeldungErstellenDTO
+Anmeldung -- AnmeldungAnzeigenDTO
+Event o-- Benutzer
+
+class Event {
+    -String: name
+    -von: LocalDate
+    -bis: LocalDate
+    -creator : Benutzer
+    -organisatoren : List<Benutzer>
+}
+
+class Benutzer {
+    -name : String
+    -hash : String
+    -von : LocalDate
+    -bis : LocalDate
+    -organisiert : List<Event>
+    +addEvent(Event): void
+}
+
+class Anmeldung {
+    -String : vorname
+    -String : nachname
+    -LocalDate : geburtstag
+    -Boolean : schwimmer
+    -String : anmerkung
+    -String : adresse
+    -Event : event
+    +Anmeldung(AnmeldungErstellenDTO): Anmeldung 
+    +toDTO(): AnmeldungAnzeigenDTO
+    +alter(): Alter
+}
+
+class AnmeldungAnzeigenDTO {
+    +String: vorname
+    +String: nachname
+    +Boolean: schwimmer
+    +String: anmerkung
+    +String: alter
+    +String: adresse
+}
+
+class AnmeldungErstellenDTO {
+    +String: vorname
+    +String: nachname
+    +LocalDate: geburtstag
+    +Boolean: schwimmer
+    +String: anmerkung
+    +String: adresse
+}
+@enduml
