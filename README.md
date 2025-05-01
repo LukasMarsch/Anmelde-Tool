@@ -4,6 +4,13 @@ Das Anmeldetool ist ein zweiteiliges Hilfsmittel für die Verwaltung von Teilneh
 
 Um die Anwesenheiten von Teilnehmern bei Events gemäß der Sorgfaltspflicht aufzunehmen melden sich die Teilnehmer in einer Anmeldemaske im vorfeld an und werden während des Events von Organisatoren und Mitarbeitern überprüft.
 
+## Tech-Stack
+TBD
+
+## Struktur
+
+![image](https://github.com/user-attachments/assets/023d8376-bfd6-4885-9479-7b68b73e5538)
+
 ## Anforderungen
 
 A. Online kann das Alter nicht angezeigt werden, sondern lediglich das Geburtsdatum. Um das Alter am Veranstaltungsbeginn (ohne Kopfrechnen) herauszufinden (z. B. um zu entscheiden, ob eine Einverständniserklärung notwendig ist; oder für bestimmte Dienste infrage kommende Personen zu identifizieren), musste die Teilnehmerliste als Excel exportiert und darin dann eine entsprechende Spalte mit Formel eingerichtet werden. Entsprechend ist online auch keine Filterung nach „volljährig“ o. ä. möglich.
