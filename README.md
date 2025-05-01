@@ -11,6 +11,20 @@ TBD
 
 ![image](https://github.com/user-attachments/assets/023d8376-bfd6-4885-9479-7b68b73e5538)
 
+## User Managemet
+
+User Management wird für den Tracker essentiell.
+Vorgeschlagene Rollenaufteilung: Admin > Veranstalter > Helfer
+
+|                                       | Admin | Veranstalter | Helfer |
+|---------------------------------------|-------|--------------|--------|
+| Teilnehmer An-Abmelden                | x     | x            | x      |
+| Teilnahmen von Events einsehen        | x     | x            | x      |
+| Event erstellen/löschen               | x     | x            | -      |
+| Helfer zu Event hinzufügen            | x     | x            | -      |
+| alle Details von Anmeldungen einsehen | x     | x            | -      |
+| Helfer / Veranstalter ernennen        | x     | -            | -      |
+
 ## Anforderungen
 
 A. Online kann das Alter nicht angezeigt werden, sondern lediglich das Geburtsdatum. Um das Alter am Veranstaltungsbeginn (ohne Kopfrechnen) herauszufinden (z. B. um zu entscheiden, ob eine Einverständniserklärung notwendig ist; oder für bestimmte Dienste infrage kommende Personen zu identifizieren), musste die Teilnehmerliste als Excel exportiert und darin dann eine entsprechende Spalte mit Formel eingerichtet werden. Entsprechend ist online auch keine Filterung nach „volljährig“ o. ä. möglich.
