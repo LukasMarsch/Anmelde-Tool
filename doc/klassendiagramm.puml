@@ -42,10 +42,16 @@ class Event {
     -List<Benutzer> organisatoren
     -List<Anmeldung> anmeldungen
     -Optional<Shuttle> shuttle
+    -List<Tarif> tarif
     +addBenutzer(Benutzer): void
     +removeBenutzer(Benutzer): void
     +addAnmeldung(Anmeldung): void
     +removeAnmeldung(Anmeldung): void
+}
+
+class Tarif {
+    LocalDate bisDatum
+    double preis
 }
 
 class Benutzer {
@@ -64,6 +70,7 @@ class Teilnehmer {
     -Boolean anwesend
     -Boolean bestaetigungVersendet
     -List<String> aufgaben
+    -Rolle rolle
     +Anmeldung(AnmeldungErstellenDTO): Anmeldung
     +addAufgabe(String): void
     +removeAufgabe(String): void
@@ -72,24 +79,26 @@ class Teilnehmer {
 }
 
 class Anmeldung {
-    +Event event
-    +String vorname
-    +String nachname
-    +Email emailAdresse
-    +Adresse adresse
-    +Kirchenbezirk bezirk
-    +String gemeinde
-    +LocalDate geburtstag
-    +Geschlecht geschlecht
-    +Isst isst
-    +List<Essen> anwesend
-    +Boolean schwimmer
-    +String anmerkung
-    +Optional<MultipartFile> einverstaendnisErklaerung
-    +String nameNotfallkontakt
-    +String nummerNotfallkontakt
-    +Optional<Halt> nimmtShuttleVon
-    +Optional<Entschuldigung> entschuldigung
+    -Event event
+    -String vorname
+    -String nachname
+    -Email emailAdresse
+    -Adresse adresse
+    -Kirchenbezirk bezirk
+    -String gemeinde
+    -LocalDate geburtstag
+    -Geschlecht geschlecht
+    -Isst isst
+    -List<Essen> anwesend
+    -Boolean schwimmer
+    -String anmerkung
+    -Optional<MultipartFile> einverstaendnisErklaerung
+    -String nameNotfallkontakt
+    -String nummerNotfallkontakt
+    -Optional<Halt> nimmtShuttleVon
+    -Optional<Entschuldigung> entschuldigung
+    +addEssen(Essen): void
+    +removeEssen(Essen): void
 }
 
 class Entschuldigung {
@@ -107,6 +116,7 @@ class Shuttle {
 class Halt {
     -PostAdresse ort
     -LocalTime zeit
+    -double preis
 }
 
 class PostAdresse {
@@ -164,8 +174,12 @@ enum Kirchenbezirk {
     ELKIB
 }
 enum Alter {
-    U16
-    U18
+    U16,
+    U18,
     O18
+}
+
+enum Rolle {
+
 }
 @enduml
