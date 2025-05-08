@@ -1,54 +1,171 @@
 @startuml
-Anmeldung *-- Event
-Anmeldung -- AnmeldungErstellenDTO
-Anmeldung -- AnmeldungAnzeigenDTO
+Teilnehmer *-- Event
+Teilnehmer -- Anmeldung
+Teilnehmer -- Alter
 Event o-- Benutzer
+Event o-- Anmeldung
+Event .. Shuttle
+Event *-- Essen
+Anmeldung *-- Geschlecht
+Anmeldung *-- Isst
+Anmeldung o.. Halt
+Anmeldung o.. Entschuldigung
+Anmeldung *-- Kirchenbezirk
+Anmeldung .. Reise
+Anmeldung *-- PostAdresse
+Anmeldung *-- javax.mail.InetAddress
+Essen *-- Mahlzeit
+PostAdresse --|> javax.mail.Address
+
+abstract class javax.mail.Address {
+    +Address()
+    +{abstract} equals(Object): Boolean
+    +{abstract} getType(): String
+    +{abstract} toString(): String
+}
+
+class javax.mail.InetAddress {
+    +Address()
+    +equals(Object): Boolean
+    +getType(): String
+    +toString(): String
+}
 
 class Event {
-    -String: name
-    -von: LocalDate
-    -bis: LocalDate
-    -creator : Benutzer
-    -organisatoren : List<Benutzer>
+    -String name
+    -LocalDate von
+    -LocalDate bis
+    -Essen erstesEssen
+    -Essen letztesEssen
+    -Boolean mitKaffee
+    -Benutzer creator
+    -List<Benutzer> organisatoren
+    -List<Anmeldung> anmeldungen
+    -Optional<Shuttle> shuttle
+    +addBenutzer(Benutzer): void
+    +removeBenutzer(Benutzer): void
+    +addAnmeldung(Anmeldung): void
+    +removeAnmeldung(Anmeldung): void
 }
 
 class Benutzer {
-    -name : String
-    -hash : String
-    -von : LocalDate
-    -bis : LocalDate
-    -organisiert : List<Event>
+    -String name
+    -String hash
+    -LocalDate von
+    -LocalDate bis
+    -List<Event> organisiert
+    -Boolean administrator
     +addEvent(Event): void
+    +removeEvent(Event): void
 }
 
-class Anmeldung {
-    -String : vorname
-    -String : nachname
-    -LocalDate : geburtstag
-    -Boolean : schwimmer
-    -String : anmerkung
-    -String : adresse
-    -Event : event
-    +Anmeldung(AnmeldungErstellenDTO): Anmeldung 
+class Teilnehmer {
+    -Boolean angekommen
+    -Boolean anwesend
+    -Boolean bestaetigungVersendet
+    -List<String> aufgaben
+    +Anmeldung(AnmeldungErstellenDTO): Anmeldung
+    +addAufgabe(String): void
+    +removeAufgabe(String): void
     +toDTO(): AnmeldungAnzeigenDTO
     +alter(): Alter
 }
 
-class AnmeldungAnzeigenDTO {
-    +String: vorname
-    +String: nachname
-    +Boolean: schwimmer
-    +String: anmerkung
-    +String: alter
-    +String: adresse
+class Anmeldung {
+    +Event event
+    +String vorname
+    +String nachname
+    +Email emailAdresse
+    +Adresse adresse
+    +Kirchenbezirk bezirk
+    +String gemeinde
+    +LocalDate geburtstag
+    +Geschlecht geschlecht
+    +Isst isst
+    +List<Essen> anwesend
+    +Boolean schwimmer
+    +String anmerkung
+    +Optional<MultipartFile> einverstaendnisErklaerung
+    +String nameNotfallkontakt
+    +String nummerNotfallkontakt
+    +Optional<Halt> nimmtShuttleVon
+    +Optional<Entschuldigung> entschuldigung
 }
 
-class AnmeldungErstellenDTO {
-    +String: vorname
-    +String: nachname
-    +LocalDate: geburtstag
-    +Boolean: schwimmer
-    +String: anmerkung
-    +String: adresse
+class Entschuldigung {
+    -String name
+    -PostAdresse anschrift
+    -String klasse
+}
+
+class Shuttle {
+    -Event event
+    -List<Halt> haltestellen
+    -String detail
+}
+
+class Halt {
+    -PostAdresse ort
+    -LocalTime zeit
+}
+
+class PostAdresse {
+    -String Straße
+    -String Hausnummer
+    -String PLZ
+    -String Stadt
+    -PostAdresse()
+    +PostAdresse(String, String, String, String)
+    +equals(Object): Boolean
+    +getType(): String
+    +toString(): String
+}
+
+enum Mahlzeit {
+    Früh,
+    Mittag,
+    Kaffee,
+    Abend
+}
+
+class Essen {
+    +LocalDate tag
+    +Mahlzeit mahlzeit
+}
+
+enum Geschlecht {
+    M,
+    W,
+    D
+}
+
+enum Isst {
+    VEGAN,
+    VEGETARISCH,
+    OMNIVOR
+}
+
+enum Reise {
+    SELBST,
+    SHUTTLE
+}
+
+enum Kirchenbezirk {
+    BERLIN_BRANDENBURG,
+    HESSEN_NORD,
+    HESSEN_SUED,
+    LAUSITZ,
+    NIEDERSACHSEN_OST,
+    NIEDERSACHSEN_WEST,
+    NIEDERSACHSEN_SUED,
+    RHEINLAND_WESTPFALEN,
+    SACHSEN_THUERINGEN,
+    SUEDDEUTSCHLAND,
+    ELKIB
+}
+enum Alter {
+    U16
+    U18
+    O18
 }
 @enduml
