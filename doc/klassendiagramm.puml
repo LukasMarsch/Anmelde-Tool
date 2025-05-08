@@ -1,21 +1,22 @@
 @startuml
-Teilnehmer *-- Event
-Teilnehmer -- Anmeldung
-Teilnehmer -- Alter
+Teilnehmer *- Event
+Teilnehmer o-- Anmeldung
+Teilnehmer - Alter
 Event o-- Benutzer
-Event o-- Anmeldung
 Event .. Shuttle
-Event *-- Essen
-Anmeldung *-- Geschlecht
-Anmeldung *-- Isst
+Event *- Essen
+Event *- Tarif
+Anmeldung -o Event
 Anmeldung o.. Halt
 Anmeldung o.. Entschuldigung
-Anmeldung *-- Kirchenbezirk
-Anmeldung .. Reise
+Kirchenbezirk --* Anmeldung
 Anmeldung *-- PostAdresse
 Anmeldung *-- javax.mail.InetAddress
-Essen *-- Mahlzeit
+Essen *- Mahlzeit
 PostAdresse --|> javax.mail.Address
+Reise . Anmeldung
+Geschlecht -* Anmeldung
+Isst -* Anmeldung
 
 abstract class javax.mail.Address {
     +Address()
@@ -66,15 +67,15 @@ class Benutzer {
 }
 
 class Teilnehmer {
+    -Anmeldung anmeldung
     -Boolean angekommen
     -Boolean anwesend
     -Boolean bestaetigungVersendet
     -List<String> aufgaben
     -Rolle rolle
-    +Anmeldung(AnmeldungErstellenDTO): Anmeldung
+    +Teilnehmer(Anmeldung)
     +addAufgabe(String): void
     +removeAufgabe(String): void
-    +toDTO(): AnmeldungAnzeigenDTO
     +alter(): Alter
 }
 
@@ -82,8 +83,8 @@ class Anmeldung {
     -Event event
     -String vorname
     -String nachname
-    -Email emailAdresse
-    -Adresse adresse
+    -InternetAdress mail
+    -PostAdresse adresse
     -Kirchenbezirk bezirk
     -String gemeinde
     -LocalDate geburtstag
@@ -92,7 +93,7 @@ class Anmeldung {
     -List<Essen> anwesend
     -Boolean schwimmer
     -String anmerkung
-    -Optional<MultipartFile> einverstaendnisErklaerung
+    -Optional<byte[]> einverstaendnisErklaerung
     -String nameNotfallkontakt
     -String nummerNotfallkontakt
     -Optional<Halt> nimmtShuttleVon
@@ -120,10 +121,10 @@ class Halt {
 }
 
 class PostAdresse {
-    -String Straße
-    -String Hausnummer
-    -String PLZ
-    -String Stadt
+    -String strasse
+    -String hausnummer
+    -String plz
+    -String stadt
     -PostAdresse()
     +PostAdresse(String, String, String, String)
     +equals(Object): Boolean
@@ -132,10 +133,10 @@ class PostAdresse {
 }
 
 enum Mahlzeit {
-    Früh,
-    Mittag,
-    Kaffee,
-    Abend
+    FRUEH,
+    MITTAG,
+    KAFFEE,
+    ABEND
 }
 
 class Essen {
