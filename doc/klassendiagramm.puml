@@ -1,54 +1,186 @@
 @startuml
-Anmeldung *-- Event
-Anmeldung -- AnmeldungErstellenDTO
-Anmeldung -- AnmeldungAnzeigenDTO
+Teilnehmer *- Event
+Teilnehmer o-- Anmeldung
+Teilnehmer - Alter
 Event o-- Benutzer
+Event .. Shuttle
+Event *- Essen
+Event *- Tarif
+Anmeldung -o Event
+Anmeldung o.. Halt
+Anmeldung o.. Entschuldigung
+Kirchenbezirk --* Anmeldung
+Anmeldung *-- PostAdresse
+Anmeldung *-- javax.mail.InetAddress
+Essen *- Mahlzeit
+PostAdresse --|> javax.mail.Address
+Reise . Anmeldung
+Geschlecht -* Anmeldung
+Isst -* Anmeldung
+
+abstract class javax.mail.Address {
+    +Address()
+    +{abstract} equals(Object): Boolean
+    +{abstract} getType(): String
+    +{abstract} toString(): String
+}
+
+class javax.mail.InetAddress {
+    +Address()
+    +equals(Object): Boolean
+    +getType(): String
+    +toString(): String
+}
 
 class Event {
-    -String: name
-    -von: LocalDate
-    -bis: LocalDate
-    -creator : Benutzer
-    -organisatoren : List<Benutzer>
+    -String name
+    -LocalDate von
+    -LocalDate bis
+    -Essen erstesEssen
+    -Essen letztesEssen
+    -Boolean mitKaffee
+    -Benutzer creator
+    -List<Benutzer> organisatoren
+    -List<Anmeldung> anmeldungen
+    -Optional<Shuttle> shuttle
+    -List<Tarif> tarif
+    +addBenutzer(Benutzer): void
+    +removeBenutzer(Benutzer): void
+    +addAnmeldung(Anmeldung): void
+    +removeAnmeldung(Anmeldung): void
+}
+
+class Tarif {
+    LocalDate bisDatum
+    double preis
 }
 
 class Benutzer {
-    -name : String
-    -hash : String
-    -von : LocalDate
-    -bis : LocalDate
-    -organisiert : List<Event>
+    -String name
+    -String hash
+    -LocalDate von
+    -LocalDate bis
+    -List<Event> organisiert
+    -Boolean administrator
     +addEvent(Event): void
+    +removeEvent(Event): void
 }
 
-class Anmeldung {
-    -String : vorname
-    -String : nachname
-    -LocalDate : geburtstag
-    -Boolean : schwimmer
-    -String : anmerkung
-    -String : adresse
-    -Event : event
-    +Anmeldung(AnmeldungErstellenDTO): Anmeldung 
-    +toDTO(): AnmeldungAnzeigenDTO
+class Teilnehmer {
+    -Anmeldung anmeldung
+    -Boolean angekommen
+    -Boolean anwesend
+    -Boolean bestaetigungVersendet
+    -List<String> aufgaben
+    -Rolle rolle
+    +Teilnehmer(Anmeldung)
+    +addAufgabe(String): void
+    +removeAufgabe(String): void
     +alter(): Alter
 }
 
-class AnmeldungAnzeigenDTO {
-    +String: vorname
-    +String: nachname
-    +Boolean: schwimmer
-    +String: anmerkung
-    +String: alter
-    +String: adresse
+class Anmeldung {
+    -Event event
+    -String vorname
+    -String nachname
+    -InternetAdress mail
+    -PostAdresse adresse
+    -Kirchenbezirk bezirk
+    -String gemeinde
+    -LocalDate geburtstag
+    -Geschlecht geschlecht
+    -Isst isst
+    -List<Essen> anwesend
+    -Boolean schwimmer
+    -String anmerkung
+    -Optional<byte[]> einverstaendnisErklaerung
+    -String nameNotfallkontakt
+    -String nummerNotfallkontakt
+    -Optional<Halt> nimmtShuttleVon
+    -Optional<Entschuldigung> entschuldigung
+    +addEssen(Essen): void
+    +removeEssen(Essen): void
 }
 
-class AnmeldungErstellenDTO {
-    +String: vorname
-    +String: nachname
-    +LocalDate: geburtstag
-    +Boolean: schwimmer
-    +String: anmerkung
-    +String: adresse
+class Entschuldigung {
+    -String name
+    -PostAdresse anschrift
+    -String klasse
+}
+
+class Shuttle {
+    -Event event
+    -List<Halt> haltestellen
+    -String detail
+}
+
+class Halt {
+    -PostAdresse ort
+    -LocalTime zeit
+    -double preis
+}
+
+class PostAdresse {
+    -String strasse
+    -String hausnummer
+    -String plz
+    -String stadt
+    -PostAdresse()
+    +PostAdresse(String, String, String, String)
+    +equals(Object): Boolean
+    +getType(): String
+    +toString(): String
+}
+
+enum Mahlzeit {
+    FRUEH,
+    MITTAG,
+    KAFFEE,
+    ABEND
+}
+
+class Essen {
+    +LocalDate tag
+    +Mahlzeit mahlzeit
+}
+
+enum Geschlecht {
+    M,
+    W,
+    D
+}
+
+enum Isst {
+    VEGAN,
+    VEGETARISCH,
+    OMNIVOR
+}
+
+enum Reise {
+    SELBST,
+    SHUTTLE
+}
+
+enum Kirchenbezirk {
+    BERLIN_BRANDENBURG,
+    HESSEN_NORD,
+    HESSEN_SUED,
+    LAUSITZ,
+    NIEDERSACHSEN_OST,
+    NIEDERSACHSEN_WEST,
+    NIEDERSACHSEN_SUED,
+    RHEINLAND_WESTPFALEN,
+    SACHSEN_THUERINGEN,
+    SUEDDEUTSCHLAND,
+    ELKIB
+}
+enum Alter {
+    U16,
+    U18,
+    O18
+}
+
+enum Rolle {
+
 }
 @enduml
