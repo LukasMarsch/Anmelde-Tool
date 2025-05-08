@@ -1,0 +1,15 @@
+package org.jufe.anmeldetool.entity;
+
+public enum Kirchenbezirk {
+    BERLIN_BRANDENBURG,
+    HESSEN_NORD,
+    HESSEN_SUED,
+    LAUSITZ,
+    NIEDERSACHSEN_OST,
+    NIEDERSACHSEN_WEST,
+    NIEDERSACHSEN_SUED,
+    RHEINLAND_WESTPFALEN,
+    SACHSEN_THUERINGEN,
+    SUEDDEUTSCHLAND,
+    ELKIB
+}
