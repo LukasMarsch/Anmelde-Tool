@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+:User:
+:Admin:
+:Editor:
+
+package Anmeldung {
+    User --> (Anmeldung ausfüllen)
+    User --> (Anmeldung abschicken)
+    User --> (Erziehungsberechtigung hochladen)
+    (Anmeldung abschicken) ..> (Anmeldung speichern) : <<include>>
+}
+
+package Administration {
+    Admin --> (Anmelden)
+    (Neues Event anlegen) ..> (Anmelden) : <<extend>>
+    (Event auswählen) ..> (Anmelden) : <<extend>>
+    Admin --> (Neues Event anlegen)
+    Admin --> (Event bearbeiten)
+    Admin --> (Event auswählen)
+    (Event bearbeiten) ..> (Event auswählen) : <<extend>>
+}
+
+package Editieren {
+    Editor --> (Anmeldungen lesen)
+    Editor --> (Anmeldung löschen)
+    Editor --> (Bezahlt setzen)
+    Editor --> (Anmeldung suchen)
+    Editor --> (Anmeldung auswählen)
+    Editor --> (Anmelden/Abmelden)
+    Editor --> (Anwesend/Abwesend)
+    Editor --> (Aufgaben ändern)
+    (Aufgaben ändern) ..> (Anmeldung auswählen) <<extend>>
+    (Anmelden/Abmelden) <.. (Anmeldung auswählen) : <<include>>
+    (Anwesend/Abwesend) <.. (Anmeldung auswählen) : <<include>>
+    (Bezahlt setzen) ..> (Anmeldung auswählen) : <<extend>>
+    (Anmeldung löschen) ..> (Anmeldung auswählen) : <<include>>
+    (Anmeldung auswählen) ..> (Anmeldungen lesen) : <<extend>>
+    Editor --> (Anmelden)
+    (Anmeldungen lesen) ..> (Anmelden) : <<extend>>
+}
+@enduml
