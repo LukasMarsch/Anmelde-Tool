@@ -1,4 +1,4 @@
-package org.jufe.anmeldetool.entity;
+package org.jufe.address;
 
 import jakarta.mail.Address;
 import lombok.AllArgsConstructor;

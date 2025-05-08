@@ -1,4 +1,4 @@
-package org.jufe.anmeldetool.entity;
+package org.jufe.anmeldetool.entity.event;
 
 public enum Mahlzeit {
     FRUEH,

@@ -1,4 +1,4 @@
-package org.jufe.anmeldetool.entity;
+package org.jufe.anmeldetool.entity.anmeldung;
 
 public enum Geschlecht {
     M,
