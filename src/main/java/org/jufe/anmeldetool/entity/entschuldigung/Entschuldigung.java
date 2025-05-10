@@ -6,6 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jufe.address.PostAdresse;
 
@@ -15,6 +16,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @Entity
+@NoArgsConstructor // TODO Code smell: requires public (protected) NoArgsConstructor...
 public class Entschuldigung {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

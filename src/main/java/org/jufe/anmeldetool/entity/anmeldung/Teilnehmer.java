@@ -1,9 +1,6 @@
 package org.jufe.anmeldetool.entity.anmeldung;
 
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,6 +9,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
+@Entity //TODO muss das nicht hier hin? war missing... kein Internet im Zug, kann nicht bauen, weil packages fehlen, kann also nicht gegen die H2 gegenchecken
 public class Teilnehmer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
