@@ -46,7 +46,7 @@ public class Anmeldung {
     private String anmerkung;
     private byte[] einverstaendnisErklaerung;
     private String nameNotfallkontakt;
-    private String nummerNutfallkontakt;
+    private String nummerNotfallkontakt;
 
     @ManyToOne
     private Halt nimmtShuttleVon;
