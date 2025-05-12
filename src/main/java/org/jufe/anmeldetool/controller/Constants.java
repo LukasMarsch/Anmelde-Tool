@@ -1,0 +1,14 @@
+package org.jufe.anmeldetool.controller;
+
+public class Constants {
+    private Constants(){}
+
+    public static final String ENTITY_EVENT = "event";
+    public static final String ENTITY_ANMELDUNG = "anmeldung";
+
+    public static final String REDIRECT_LOGIN = "redirect:/login";
+    public static final String REDIRECT_SHUTTLE = "redirect:/app/shuttle";
+
+    public static final String VIEW_ANMELDE_FORMULAR = "anmeldeFormular";
+
+}
