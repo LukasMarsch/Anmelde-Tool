@@ -1,10 +1,7 @@
 package org.jufe.anmeldetool.entity.event;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.reise.Shuttle;
 
@@ -17,6 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
