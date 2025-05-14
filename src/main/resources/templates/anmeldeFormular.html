@@ -30,10 +30,26 @@
                     <input type="email" class="form-control" id="email" th:field="*{mail}" required>
                 </div>
 
+                <h2>Adresse</h2>
                 <div class="form-group">
-                    <label for="adresse">Adresse</label>
-                    <input type="text" class="form-control" id="adresse" th:field="*{adresse}" required>
+                    <label for="strasse">Straße</label>
+                    <input type="text" class="form-control" id="strasse" th:field="*{adresse.strasse}" required>
                 </div>
+                <div class="form-group">
+                    <label for="hausnummer">Hausnummer</label>
+                    <input type="text" class="form-control" id="hausnummer" th:field="*{adresse.hausnummer}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="plz">PLZ</label>
+                    <input type="text" class="form-control" id="plz" th:field="*{adresse.plz}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="stadt">Stadt</label>
+                    <input type="text" class="form-control" id="stadt" th:field="*{adresse.stadt}" required>
+                </div>
+
 
                 <div class="form-group">
                     <label for="kirchenbezirk">Kirchenbezirk</label>
