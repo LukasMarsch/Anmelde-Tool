@@ -3,10 +3,8 @@ package org.jufe.anmeldetool.entity.anmeldung;
 import io.micrometer.common.lang.NonNull;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.jufe.address.PostAdresse;
 import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.entschuldigung.Entschuldigung;
@@ -20,10 +18,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
 public class Anmeldung extends BaseEntity implements Serializable {
 

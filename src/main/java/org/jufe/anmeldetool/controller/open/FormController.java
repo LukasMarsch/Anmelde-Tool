@@ -1,6 +1,8 @@
 package org.jufe.anmeldetool.controller.open;
 
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jufe.anmeldetool.controller.Constants;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.repository.anmeldung.AnmeldungRepository;
@@ -20,9 +22,13 @@ public class FormController extends Constants {
 
     private final EventService eventService;
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     @PostMapping
     public String postForm(@ModelAttribute(name = ENTITY_ANMELDUNG) Anmeldung anmeldung, Model model) {
         try {
+            LOGGER.info(() -> String.format("%s", anmeldung));
+            LOGGER.info(() -> String.format("model: %s", model.getAttribute(ENTITY_ANMELDUNG)));
             anmeldungRepository.save(anmeldung);
 
             model.addAttribute(ENTITY_SUCCESS, true);

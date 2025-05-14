@@ -1,9 +1,7 @@
 package org.jufe.anmeldetool.controller;
 
 public abstract class Constants {
-
-    private Constants() {}
-
+    
     public static final String ENTITY_SUCCESS = "success";
 
     public static final String ENTITY_MESSAGE = "message";

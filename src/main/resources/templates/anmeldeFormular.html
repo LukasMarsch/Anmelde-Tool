@@ -14,31 +14,31 @@
     <div class="card">
         <div class="card-body">
             <form action="#" th:action="@{/anmeldung}" th:object="${anmeldung}" method="post">
-                <input type="hidden" th:select="*{event}" th:value="${session.event}">
+                <input type="hidden" th:field="*{event}" th:value="${session.event}">
                 <div class="form-group">
                     <label for="vorname">Vorname</label>
-                    <input type="text" class="form-control" id="vorname" th:select="*{vorname}" required>
+                    <input type="text" class="form-control" id="vorname" th:field="*{vorname}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="nachname">Nachname</label>
-                    <input type="text" class="form-control" id="nachname" th:select="*{nachname}" required>
+                    <input type="text" class="form-control" id="nachname" th:field="*{nachname}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="email">E-Mail Adresse</label>
-                    <input type="email" class="form-control" id="email" th:select="*{mail}" required>
+                    <input type="email" class="form-control" id="email" th:field="*{mail}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="adresse">Adresse</label>
-                    <input type="text" class="form-control" id="adresse" th:select="*{adresse}" required>
+                    <input type="text" class="form-control" id="adresse" th:field="*{adresse}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="kirchenbezirk">Kirchenbezirk</label>
-                    <select class="form-control" id="kirchenbezirk" th:select="*{bezirk}" required>
-                        <option label="Bitte Auswählen" disabled selected></option>
+                    <select class="form-control" id="kirchenbezirk" th:field="*{bezirk}" required>
+                        <option label="Bitte Auswählen" value="" disabled selected></option>
                         <option th:each="kirchenbezirkOption : ${T(org.jufe.anmeldetool.entity.anmeldung.Kirchenbezirk).values()}"
                                 th:value="${kirchenbezirkOption}"
                                 th:text="${kirchenbezirkOption.displayValue}">
@@ -48,17 +48,17 @@
 
                 <div class="form-group">
                     <label for="gemeinde">Gemeinde</label>
-                    <input type="text" class="form-control" id="gemeinde" th:select="*{gemeinde}">
+                    <input type="text" class="form-control" id="gemeinde" th:field="*{gemeinde}">
                 </div>
 
                 <div class="form-group">
                     <label for="geburtstag">Geburtstag</label>
-                    <input type="date" class="form-control" id="geburtstag" th:select="*{geburtstag}" required>
+                    <input type="date" class="form-control" id="geburtstag" th:field="*{geburtstag}" required>
                 </div>
 
                 <div class="form-group">
                     <label for="geschlecht">Geschlecht</label>
-                    <select class="form-control" id="geschlecht" th:select="*{geschlecht}" required>
+                    <select class="form-control" id="geschlecht" th:field="*{geschlecht}" required>
                         <option th:each="geschlechtOption : ${T(org.jufe.anmeldetool.entity.anmeldung.Geschlecht).values()}"
                                 th:value="${geschlechtOption}"
                                 th:text="${geschlechtOption.displayValue}">
@@ -68,7 +68,7 @@
 
                 <div class="form-group">
                     <label for="isst">Du Isst</label>
-                    <select class="form-control" id="isst" th:select="*{isst}" required>
+                    <select class="form-control" id="isst" th:field="*{isst}" required>
                         <option th:each="essOption : ${T(org.jufe.anmeldetool.entity.anmeldung.Isst).values()}"
                                 th:value="${essOption}"
                                 th:text="${essOption.displayValue}">
@@ -78,27 +78,27 @@
 
                 <div class="form-group">
                     <label for="schwimmer">Schwimmer</label>
-                    <input type="checkbox" class="form-control" id="schwimmer" th:select="*{schwimmer}" required>
+                    <input type="checkbox" class="form-control" id="schwimmer" th:field="*{schwimmer}">
                 </div>
 
                 <div class="form-group">
                     <label for="anmerkung">Anmerkung</label>
-                    <input type="text" class="form-control" id="anmerkung" th:select="*{anmerkung}">
+                    <input type="text" class="form-control" id="anmerkung" th:field="*{anmerkung}">
                 </div>
 
                 <div class="form-group" id="evk-div">
                     <label for="evk">Einverständnis-Erklärung der Erziehungsberechtigen (PDF)</label>
-                    <input type="file" class="form-control" id="evk" accept=".pdf,.png" th:select="*{einverstaendnisErklaerung}">
+                    <input type="file" class="form-control" id="evk" accept=".pdf,.png" th:field="*{einverstaendnisErklaerung}">
                 </div>
 
                 <div class="form-group">
                     <label for="notfallkontakt">Name Notfallkontakt</label>
-                    <input type="text" class="form-control" id="notfallkontakt" th:select="*{nameNotfallkontakt}">
+                    <input type="text" class="form-control" id="notfallkontakt" th:field="*{nameNotfallkontakt}">
                 </div>
 
                 <div class="form-group">
                     <label for="nummerNotfallkontakt">Notfallkontakt Nummer</label>
-                    <input type="tel" class="form-control" id="nummerNotfallkontakt" th:select="*{nummerNotfallkontakt}">
+                    <input type="tel" class="form-control" id="nummerNotfallkontakt" th:field="*{nummerNotfallkontakt}">
                 </div>
 
                 <!-- todo: shuttles
