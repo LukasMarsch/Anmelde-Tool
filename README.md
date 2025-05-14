@@ -1,15 +1,21 @@
 # Anmelde-Tool
+## Einleitung
 
-Das Anmeldetool ist ein zweiteiliges Hilfsmittel für die Verwaltung von Teilnehmern bei Events. 
+Das Anmeldetool ist ein mehrteiliges Hilfsmittel für die Verwaltung von Teilnehmern bei Events.
 
-Um die Anwesenheiten von Teilnehmern bei Events gemäß der Sorgfaltspflicht aufzunehmen melden sich die Teilnehmer in einer Anmeldemaske im vorfeld an und werden während des Events von Organisatoren und Mitarbeitern überprüft.
-
-## Tech-Stack
-TBD
+Um die Anwesenheiten von Teilnehmern bei Events gemäß der Sorgfaltspflicht aufzunehmen melden sich die Teilnehmer in einer Anmeldemaske im Vorfeld an und werden während des Anmeldeprozesses von Organisatoren und Mitarbeitern überprüft.
 
 ## Struktur
 
-![image](https://github.com/user-attachments/assets/023d8376-bfd6-4885-9479-7b68b73e5538)
+![image](https://github.com/user-attachments/assets/89ac219a-cd64-44fd-9fbb-12f4a9e43564)
+
+
+## Tech-Stack
+| Level | Data            | Model       | View              |
+|-------|-----------------|-------------|-------------------|
+| High  | Spring Data JPA | Spring Boot | Bootstrap, JQuery |
+| ----- | Hibernate       | SOA         | Thymeleaf         |
+| Low   | H2/Postgres     | MVC         | HTML              |
 
 ## User Managemet
 
