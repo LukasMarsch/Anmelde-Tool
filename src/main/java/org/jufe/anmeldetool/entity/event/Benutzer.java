@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -13,14 +14,18 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @Entity
-public class Benutzer {
+public class Benutzer implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     private String name;
+
     private String hash;
+
     private LocalDate von;
+
     private LocalDate bis;
 
     @ManyToMany()
@@ -28,6 +33,7 @@ public class Benutzer {
 
     @OneToMany(mappedBy = "creator")
     private List<Event> leitet;
+
     private boolean administrator;
 
     public void addEvent(Event e) {
@@ -37,4 +43,5 @@ public class Benutzer {
     public void removeEvent(Event e) {
         //TODO implement
     }
+
 }

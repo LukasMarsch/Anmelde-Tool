@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -12,13 +13,17 @@ import java.util.UUID;
 @Setter
 @RequiredArgsConstructor
 @Entity
-public class Tarif {
+public class Tarif implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     UUID id;
+
     private LocalDate bis;
+
     private double preis;
 
     @ManyToOne
     private Event event;
+
 }

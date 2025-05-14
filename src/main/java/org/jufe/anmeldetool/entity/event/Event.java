@@ -5,8 +5,9 @@ import lombok.*;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.reise.Shuttle;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -15,13 +16,16 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Builder
-public class Event {
+public class Event implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     private String name;
+
     private LocalDate von;
+
     private LocalDate bis;
 
     @ManyToOne
@@ -29,37 +33,38 @@ public class Event {
 
     @ManyToOne
     private Essen letztesEssen;
+
     private boolean mitKaffee;
 
     @ManyToOne
     private Benutzer creator;
 
     @ManyToMany
-    private List<Benutzer> organisatoren;
+    private Set<Benutzer> organisatoren;
 
     @OneToMany(mappedBy = "event")
-    private List<Anmeldung> anmeldungen;
+    private Set<Anmeldung> anmeldungen;
 
     @OneToMany(mappedBy = "event")
-    private List<Shuttle> shuttles;
+    private Set<Shuttle> shuttles;
 
     @OneToMany(mappedBy = "event")
-    private List<Tarif> tarif;
+    private Set<Tarif> tarif;
 
-    public void addBenutzer(Benutzer benutzer) {
-        //TODO String als return ??? implement
+    public void addOrganisator(Benutzer benutzer) {
+        organisatoren.add(benutzer);
     }
 
-    public void removeBenutzer(Benutzer benutzer) {
-        //TODO String als return??? implement
+    public void removeOrganisator(Benutzer benutzer) {
+        organisatoren.remove(benutzer);
     }
 
     public void addAnmeldung(Anmeldung anmeldung) {
-        //TODO String als return??? implement
+        anmeldungen.add(anmeldung);
     }
 
     public void removeAnmeldung(Anmeldung anmeldung) {
-        //TODO String als return??? implement
+        anmeldungen.remove(anmeldung);
     }
 
     public void addShuttle(Shuttle shuttle) {
@@ -69,4 +74,5 @@ public class Event {
     public void removeShuttle(Shuttle shuttle) {
         this.shuttles.remove(shuttle);
     }
+
 }

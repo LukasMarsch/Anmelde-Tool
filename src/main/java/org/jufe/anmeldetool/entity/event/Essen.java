@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.UUID;
 
@@ -15,10 +16,14 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @Entity
-public class Essen {
+public class Essen implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     UUID id;
+
     private LocalDate tag;
+
     private Mahlzeit mahlzeit;
+
 }

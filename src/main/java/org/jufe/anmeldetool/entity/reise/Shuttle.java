@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.jufe.anmeldetool.entity.event.Event;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -13,15 +14,18 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @Entity
-public class Shuttle {
-     @Id
-     @GeneratedValue(strategy = GenerationType.IDENTITY)
-     private UUID id;
+public class Shuttle implements Serializable {
 
-     @ManyToOne
-     private Event event;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private UUID id;
 
-     @OneToMany(mappedBy = "shuttle")
-     private List<Halt> haltestellen;
-     private String detail;
+    @ManyToOne
+    private Event event;
+
+    @OneToMany(mappedBy = "shuttle")
+    private List<Halt> haltestellen;
+
+    private String detail;
+
 }

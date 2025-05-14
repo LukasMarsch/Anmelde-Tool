@@ -10,18 +10,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jufe.address.PostAdresse;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Entity
-@NoArgsConstructor // TODO Code smell: requires public (protected) NoArgsConstructor...
-public class Entschuldigung {
+@NoArgsConstructor
+public class Entschuldigung implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
+
     private String name;
+
     private PostAdresse anschrift;
+
     private String klasse;
+
 }
