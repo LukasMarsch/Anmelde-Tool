@@ -16,9 +16,9 @@ public class Teilnehmer {
     private UUID id;
     private Boolean angekommen;
     private boolean anwesend;
-    private boolean bestaetigung;
-    private List<String> aufgaben;
-    @Enumerated
+    private boolean bestaetigungVersendet;
+
+    @Enumerated(EnumType.STRING)
     private Rolle rolle;
 
     public Teilnehmer(Anmeldung anmeldung) {
