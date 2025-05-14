@@ -1,26 +1,19 @@
 package org.jufe.anmeldetool.entity.event;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.jufe.anmeldetool.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Entity
-public class Essen implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    UUID id;
+public class Essen extends BaseEntity implements Serializable {
 
     private LocalDate tag;
 

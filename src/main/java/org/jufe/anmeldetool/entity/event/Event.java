@@ -2,25 +2,22 @@ package org.jufe.anmeldetool.entity.event;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.reise.Shuttle;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity()
+@Table(name = "EVENTTABLE")
 @Builder
-public class Event implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+public class Event extends BaseEntity implements Serializable {
 
     private String name;
 

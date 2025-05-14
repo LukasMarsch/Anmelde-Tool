@@ -1,30 +1,28 @@
 package org.jufe.anmeldetool.entity.reise;
 
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.event.Event;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.UUID;
+import java.util.Set;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Entity
-public class Shuttle implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+public class Shuttle extends BaseEntity implements Serializable {
 
     @ManyToOne
     private Event event;
 
     @OneToMany(mappedBy = "shuttle")
-    private List<Halt> haltestellen;
+    private Set<Halt> haltestellen;
 
     private String detail;
 

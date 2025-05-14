@@ -1,24 +1,23 @@
 package org.jufe.anmeldetool.entity.anmeldung;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.jufe.anmeldetool.entity.BaseEntity;
 
 import java.time.Period;
-import java.util.UUID;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Teilnehmer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+public class Teilnehmer extends BaseEntity {
 
     @OneToOne
     private Anmeldung anmeldung;

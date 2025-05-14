@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jufe.address.PostAdresse;
+import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.entschuldigung.Entschuldigung;
 import org.jufe.anmeldetool.entity.event.Essen;
 import org.jufe.anmeldetool.entity.event.Event;
@@ -18,18 +19,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Anmeldung implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+public class Anmeldung extends BaseEntity implements Serializable {
 
     @ManyToOne
     @org.springframework.lang.NonNull

@@ -1,24 +1,21 @@
 package org.jufe.anmeldetool.entity.reise;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.jufe.address.PostAdresse;
+import org.jufe.anmeldetool.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.time.LocalTime;
-import java.util.UUID;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Entity
-public class Halt implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    UUID id;
+public class Halt extends BaseEntity implements Serializable {
 
     private PostAdresse ort;
 
