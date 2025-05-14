@@ -1,5 +1,6 @@
 package org.jufe.anmeldetool.entity.anmeldung;
 
+import io.micrometer.common.lang.NonNull;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -11,10 +12,12 @@ import org.jufe.anmeldetool.entity.entschuldigung.Entschuldigung;
 import org.jufe.anmeldetool.entity.event.Essen;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.entity.reise.Halt;
+import org.springframework.lang.Nullable;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 @Getter
@@ -22,53 +25,75 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Anmeldung {
+public class Anmeldung implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
     @ManyToOne
+    @org.springframework.lang.NonNull
     private Event event;
+
     private String vorname;
+
     private String nachname;
+
     private InternetAddress mail;
+
     private PostAdresse adresse;
+
     private Kirchenbezirk bezirk;
+
     private String gemeinde;
+
     private LocalDate geburtstag;
-    @Enumerated
+
+    @Enumerated(EnumType.STRING)
     private Geschlecht geschlecht;
+
+    @Enumerated(EnumType.STRING)
     private Isst isst;
 
     @ManyToMany
-    private List<Essen> anwesend;
+    private Set<Essen> anwesend;
+
     private boolean schwimmer;
+
+    @Nullable
     private String anmerkung;
+
+    @Nullable
     private byte[] einverstaendnisErklaerung;
+
     private String nameNotfallkontakt;
+
     private String nummerNotfallkontakt;
 
     @ManyToOne
+    @Nullable
     private Halt nimmtShuttleVon;
 
     @OneToOne
     private Entschuldigung entschuldigung;
 
+    public Anmeldung(Event event) {
+        this.event = event;
+    }
+
     public void addEssen(Essen essen) {
-        //TODO implement
+        anwesend.add(essen);
     }
 
     public void removeEssen(Essen essen) {
-        // TODO implement
+        anwesend.remove(essen);
     }
 
     public Optional<byte[]> getEinverstaendnisErklaerung() {
-        return null != einverstaendnisErklaerung
-                ? Optional.of(einverstaendnisErklaerung)
-                : Optional.empty();
+        return null != einverstaendnisErklaerung ? Optional.of(einverstaendnisErklaerung) : Optional.empty();
     }
 
-    public void setEinverstaendnisErklaerung(byte[] einverstaendnisErklaerung) {
+    protected void setEinverstaendnisErklaerung(byte[] einverstaendnisErklaerung) {
         this.einverstaendnisErklaerung = einverstaendnisErklaerung;
     }
 
@@ -77,16 +102,15 @@ public class Anmeldung {
     }
 
     public Optional<Halt> getNimmtShuttleVon() {
-        return this.nimmtShuttleVon != null
-                ? Optional.of(this.nimmtShuttleVon)
-                : Optional.empty();
+        return this.nimmtShuttleVon != null ? Optional.of(this.nimmtShuttleVon) : Optional.empty();
     }
 
-    public void setNimmtShuttleVon(Optional<Halt> nimmtShuttleVon) {
+    public void setNimmtShuttleVon(@NonNull Optional<Halt> nimmtShuttleVon) throws NullPointerException {
         nimmtShuttleVon.ifPresent(this::setNimmtShuttleVon);
     }
 
-    public void setNimmtShuttleVon(Halt nimmtShuttleVon) {
+    public void setNimmtShuttleVon(@NonNull Halt nimmtShuttleVon) {
         this.nimmtShuttleVon = nimmtShuttleVon;
     }
+
 }
