@@ -122,7 +122,6 @@
 <script th:inline="javascript">
     var von = new Date([[${event.von}]]);
     var lastBirthday = new Date(von.getFullYear() - 18 , von.getMonth(), von.getDate(), 23, 59, 59); // hasse javascript :)
-    alert(lastBirthday);
     $("document").ready(() => {
         $("#geburtstag").blur(() => {
             if(new Date( $("#geburtstag").val() ) <= lastBirthday) {
