@@ -1,6 +1,7 @@
 package org.jufe.anmeldetool.entity.anmeldung;
 
 public enum Rolle {
+    /* @formatter:off */
     TEILNEHMER("Teilnehmer"),
     WORKSHOPLEITER("Workshopleiter"),
     WORKSHOPLEITER_MULTI("Workshopleiter meherere"),
@@ -8,15 +9,14 @@ public enum Rolle {
     BANDMITGLIED("Bandmitglied"),
     HELFER("Helfer"),
     JUFETEAM("JuFeTeam");
+    /* @formatter:on */
 
     private static String displayValue;
 
-    private Rolle(String displayValue) {
-        displayValue = displayValue;
-    };
+    Rolle(String displayValue) {}
 
     public float getRabatt() {
-        return switch(this) {
+        return switch (this) {
             case TEILNEHMER -> 1F;
             case WORKSHOPLEITER -> 0.5F;
             case WORKSHOPLEITER_MULTI -> 0F;

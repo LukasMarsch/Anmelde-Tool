@@ -6,14 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"></head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
 <body>
 
 <div class="content">
     <div class="card">
         <div class="card-body">
-            <form action="#" th:action="@{/anmeldung}" th:object="${anmeldung}" method="post" >
-                <input type="hidden" th:select="*{event}" th:value="${event.id}">
+            <form action="#" th:action="@{/anmeldung}" th:object="${anmeldung}" method="post">
+                <input type="hidden" th:select="*{event}" th:value="${session.event}">
                 <div class="form-group">
                     <label for="vorname">Vorname</label>
                     <input type="text" class="form-control" id="vorname" th:select="*{vorname}" required>
@@ -87,7 +88,7 @@
 
                 <div class="form-group" id="evk-div">
                     <label for="evk">Einverständnis-Erklärung der Erziehungsberechtigen (PDF)</label>
-                    <input type="file" class="form-control" id="evk" accept=".pdf,.png"  th:select="*{einverstaendnisErklaerung}">
+                    <input type="file" class="form-control" id="evk" accept=".pdf,.png" th:select="*{einverstaendnisErklaerung}">
                 </div>
 
                 <div class="form-group">

@@ -10,7 +10,7 @@ import org.jufe.anmeldetool.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -27,19 +27,27 @@ public class Benutzer extends BaseEntity implements Serializable {
     private LocalDate bis;
 
     @ManyToMany()
-    private List<Event> organisiert;
+    private Set<Event> organisiert;
 
     @OneToMany(mappedBy = "creator")
-    private List<Event> leitet;
+    private Set<Event> leitet;
 
     private boolean administrator;
 
-    public void addEvent(Event e) {
-        //TODO implement  - String als return???
+    public void addOrganisiert(Event e) {
+        organisiert.add(e);
     }
 
-    public void removeEvent(Event e) {
-        //TODO implement
+    public void removeOrganisiert(Event e) {
+        organisiert.remove(e);
+    }
+
+    public void addLeitet(Event e) {
+        leitet.add(e);
+    }
+
+    public void removeLeitet(Event e) {
+        leitet.remove(e);
     }
 
 }
