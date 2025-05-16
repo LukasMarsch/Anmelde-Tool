@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="de" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Anmeldung JuFe</title>
+    <title>Admin</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -13,8 +13,8 @@
 
 <div class="content py-4">
     <h2 th:text="'Anmeldung ' + ${anmeldung.event.name}"></h2>
-    <form class="d-flex flex-column align-items-center" action="#" th:action="@{/anmeldung}" th:object="${anmeldung}" method="post">
-        <input type="" th:field="*{event}" th:value="${anmeldung.event.id}" hidden>
+    <form class="d-flex flex-column align-items-center" action="#" th:action="@{/admin}" th:object="${anmeldung}" method="post">
+        <input type="hidden" th:field="*{event}" th:value="${session.event}">
         <div class=" flex-shrink-1">
             <!--                    <div class="d-lg-flex">-->
             <div class="card p-4 mb-4 flex-grow-1">
@@ -145,6 +145,12 @@
             </div>
             <!--                    </div>-->
             <button type="submit" class="btn btn-primary">Anmelden</button>
+            <!-- todo: shuttles
+            <div class="form-group">
+                <label for="nummerNotfallkontakt">Shuttle</label>
+                <input type="checkbox" class="form-control" id="nummerNotfallkontakt" th:select="${brauchtShuttle}">
+            </div>
+            -->
         </div>
     </form>
 </div>
