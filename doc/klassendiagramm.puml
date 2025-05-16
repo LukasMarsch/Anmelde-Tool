@@ -2,6 +2,7 @@
 Teilnehmer *- Event
 Teilnehmer o-- Anmeldung
 Teilnehmer - Alter
+Teilnehmer -- Rolle
 Event o-- Benutzer
 Event .. Shuttle
 Event *- Essen
@@ -9,23 +10,27 @@ Event *- Tarif
 Anmeldung -o Event
 Anmeldung o.. Halt
 Anmeldung o.. Entschuldigung
-Kirchenbezirk --* Anmeldung
 Anmeldung *-- PostAdresse
-Anmeldung *-- javax.mail.InetAddress
+Anmeldung *-- jakarta.mail.InetAddress
+Anmeldung . Reise
+
+
+Kirchenbezirk --* Anmeldung
+PostAdresse --|> jakarta.mail.Address
+
 Essen *- Mahlzeit
-PostAdresse --|> javax.mail.Address
-Reise . Anmeldung
 Geschlecht -* Anmeldung
 Isst -* Anmeldung
 
-abstract class javax.mail.Address {
+
+abstract class jakarta.mail.Address {
     +Address()
     +{abstract} equals(Object): Boolean
     +{abstract} getType(): String
     +{abstract} toString(): String
 }
 
-class javax.mail.InetAddress {
+class jakarta.mail.InetAddress {
     +Address()
     +equals(Object): Boolean
     +getType(): String
@@ -40,10 +45,10 @@ class Event {
     -Essen letztesEssen
     -Boolean mitKaffee
     -Benutzer creator
-    -List<Benutzer> organisatoren
-    -List<Anmeldung> anmeldungen
-    -Optional<Shuttle> shuttle
-    -List<Tarif> tarif
+    -Set<Benutzer> organisatoren
+    -Set<Anmeldung> anmeldungen
+    -Set<Shuttle> shuttles
+    -Set<Tarif> tarif
     +addBenutzer(Benutzer): void
     +removeBenutzer(Benutzer): void
     +addAnmeldung(Anmeldung): void
@@ -60,7 +65,7 @@ class Benutzer {
     -String hash
     -LocalDate von
     -LocalDate bis
-    -List<Event> organisiert
+    -Set<Event> organisiert
     -Boolean administrator
     +addEvent(Event): void
     +removeEvent(Event): void
@@ -71,11 +76,11 @@ class Teilnehmer {
     -Boolean angekommen
     -Boolean anwesend
     -Boolean bestaetigungVersendet
-    -List<String> aufgaben
+    '-List<String> aufgaben
     -Rolle rolle
     +Teilnehmer(Anmeldung)
-    +addAufgabe(String): void
-    +removeAufgabe(String): void
+    '+addAufgabe(String): void
+    '+removeAufgabe(String): void
     +alter(): Alter
 }
 
@@ -90,14 +95,15 @@ class Anmeldung {
     -LocalDate geburtstag
     -Geschlecht geschlecht
     -Isst isst
-    -List<Essen> anwesend
+    -Set<Essen> anwesend
     -Boolean schwimmer
-    -String anmerkung
-    -Optional<byte[]> einverstaendnisErklaerung
+    -@Nullable String anmerkung
+    -@Nullable byte[] einverstaendnisErklaerung
     -String nameNotfallkontakt
     -String nummerNotfallkontakt
-    -Optional<Halt> nimmtShuttleVon
-    -Optional<Entschuldigung> entschuldigung
+    -Halt nimmtShuttleVon
+    -@Nullable Entschuldigung entschuldigung
+    +Anmeldung(Event)
     +addEssen(Essen): void
     +removeEssen(Essen): void
 }
@@ -125,7 +131,7 @@ class PostAdresse {
     -String hausnummer
     -String plz
     -String stadt
-    -PostAdresse()
+    +PostAdresse()
     +PostAdresse(String, String, String, String)
     +equals(Object): Boolean
     +getType(): String
@@ -175,12 +181,27 @@ enum Kirchenbezirk {
     ELKIB
 }
 enum Alter {
-    U16,
-    U18,
-    O18
+    U16("Unter 16"),
+    U18("Unter 18"),
+    O18("Über 18")
+    -String name
+    +Alter(String)
+    +getName(): String
 }
 
 enum Rolle {
+    TEILNEHMER("Teilnehmer", 1),
+    WORKSHOPLEITER("Workshopleiter", 0.5),
+    WORKSHOPLEITER_MULTI("Workshopleiter mehrere", 1),
+    KUECHENTEAM("Küchenteam", 0.5)
+    BANDMITGLIED("Bandmitglied", 0.5)
+    HELFER("Helfer", 1)
+    JUFETEAM("JuFeTeam", 0)
 
+    -String name;
+    -float rabatt;
+    +Rolle(String, float)
+    +getName(): String
+    +getRabatt(): float
 }
 @enduml

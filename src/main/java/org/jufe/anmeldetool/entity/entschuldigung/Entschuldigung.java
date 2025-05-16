@@ -1,27 +1,26 @@
 package org.jufe.anmeldetool.entity.entschuldigung;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jufe.address.PostAdresse;
+import org.jufe.anmeldetool.entity.BaseEntity;
 
-import java.util.UUID;
+import java.io.Serializable;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @Entity
-@NoArgsConstructor // TODO Code smell: requires public (protected) NoArgsConstructor...
-public class Entschuldigung {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+@NoArgsConstructor
+public class Entschuldigung extends BaseEntity implements Serializable {
+
     private String name;
+
     private PostAdresse anschrift;
+
     private String klasse;
+
 }

@@ -1,24 +1,26 @@
 package org.jufe.anmeldetool.entity.event;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import org.jufe.anmeldetool.entity.BaseEntity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
 @Entity
-public class Tarif {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    UUID id;
-    private LocalDate bis;
-    private double preis;
+public class Tarif extends BaseEntity implements Serializable {
+
+    private final LocalDate bis;
+
+    private final double preis;
 
     @ManyToOne
     private Event event;
+
 }

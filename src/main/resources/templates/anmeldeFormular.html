@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Anmeldung JuFe</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+    <th:block th:replace="fragments/footer.html :: head"></th:block>
+</head>
+<body>
+
+<div class="content py-4">
+    <h2 th:text="'Anmeldung ' + ${anmeldung.event.name}"></h2>
+    <form class="d-flex flex-column align-items-center" action="#" th:action="@{/anmeldung}" th:object="${anmeldung}" method="post">
+        <input type="hidden" th:field="*{event}" th:value="${session.event}">
+        <div class=" flex-shrink-1">
+            <!--                    <div class="d-lg-flex">-->
+            <div class="card p-4 mb-4 flex-grow-1">
+                <h3 class="card-title">Kontakt</h3>
+                <div class="card-body">
+                    <div class="form-group pt-1">
+                        <label for="vorname">Vorname</label>
+                        <input type="text" class="form-control" id="vorname" th:field="*{vorname}" required>
+                    </div>
+
+                    <div class="form-group pt-1">
+                        <label for="nachname">Nachname</label>
+                        <input type="text" class="form-control" id="nachname" th:field="*{nachname}" required>
+                    </div>
+
+                    <div class="form-group pt-1">
+                        <label for="email">E-Mail Adresse</label>
+                        <input type="email" class="form-control" id="email" th:field="*{mail}" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-4 mb-4 flex-grow-1">
+                <h3 class="card-title">Adresse</h3>
+                <div class="card-body">
+                    <div class="form-group pt-1">
+                        <label for="strasse">Straße</label>
+                        <input type="text" class="form-control" id="strasse" th:field="*{adresse.strasse}" required>
+                    </div>
+                    <div class="form-group pt-1">
+                        <label for="hausnummer">Hausnummer</label>
+                        <input type="text" class="form-control" id="hausnummer" th:field="*{adresse.hausnummer}" required>
+                    </div>
+
+                    <div class="form-group pt-1">
+                        <label for="plz">PLZ</label>
+                        <input type="text" class="form-control" id="plz" th:field="*{adresse.plz}" required>
+                    </div>
+
+                    <div class="form-group pt-1">
+                        <label for="stadt">Stadt</label>
+                        <input type="text" class="form-control" id="stadt" th:field="*{adresse.stadt}" required>
+                    </div>
+
+                </div>
+            </div>
+            <!--                    </div>-->
+            <!--                    <div class="d-lg-flex">-->
+            <div class="card p-4 mb-4 flex-grow-1">
+                <h3 class="card-title">Deine Gemeinde</h3>
+                <div class="card-body">
+                    <div class="form-group pt-1">
+                        <label for="kirchenbezirk">Kirchenbezirk</label>
+                        <select class="form-control" id="kirchenbezirk" th:field="*{bezirk}" required>
+                            <option disabled value="">Bitte Auswählen</option>
+                            <option th:each="kirchenbezirkOption : ${T(org.jufe.anmeldetool.entity.anmeldung.Kirchenbezirk).values()}"
+                                    th:value="${kirchenbezirkOption}"
+                                    th:text="${kirchenbezirkOption.displayValue}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group pt-1">
+                        <label for="gemeinde">Gemeinde</label>
+                        <input type="text" class="form-control" id="gemeinde" th:field="*{gemeinde}">
+                    </div>
+                </div>
+            </div>
+            <div class="card p-4 mb-4 flex-grow-1">
+                <h3 class="card-title">Persönliche Angaben</h3>
+                <div class="card-body">
+                    <div class="form-group pt-1">
+                        <label for="geburtstag">Geburtstag</label>
+                        <input type="date" class="form-control" id="geburtstag" th:field="*{geburtstag}" required>
+                    </div>
+                    <div class="form-group pt-1">
+                        <label for="geschlecht">Geschlecht</label>
+                        <select class="form-control" id="geschlecht" th:field="*{geschlecht}" required>
+                            <option th:each="geschlechtOption : ${T(org.jufe.anmeldetool.entity.anmeldung.Geschlecht).values()}"
+                                    th:value="${geschlechtOption}"
+                                    th:text="${geschlechtOption.displayValue}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--                    </div>-->
+            <!--                    <div class="d-md-flex">-->
+            <div class="card p-4 mb-4 flex-grow-1">
+                <h3 class="card-title">Zusätzliche Infos</h3>
+                <div class="card-body">
+                    <div class="form-group pt-1">
+                        <label for="isst">Du Isst</label>
+                        <select class="form-control" id="isst" th:field="*{isst}" required>
+                            <option th:each="essOption : ${T(org.jufe.anmeldetool.entity.anmeldung.Isst).values()}"
+                                    th:value="${essOption}"
+                                    th:text="${essOption.displayValue}">
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-check form-group pt-1">
+                        <input type="checkbox" class="form-check-input" id="schwimmer" th:field="*{schwimmer}">
+                        <label class="form-check-label" for="schwimmer">Schwimmer</label>
+                    </div>
+                    <div class="form-group">
+                        <label for="anmerkung">Anmerkung</label>
+                        <input type="text" class="form-control" id="anmerkung" th:field="*{anmerkung}">
+                    </div>
+                </div>
+            </div>
+            <div class="card p-4 mb-4 flex-grow-1">
+                <h3 class="card-title">Für Erziehungsberechtige</h3>
+                <div class="card-body">
+                    <div class="form-group" id="evk-div">
+                        <label for="evk">Einverständnis-Erklärung (PDF)</label>
+                        <input type="file" class="form-control" id="evk" accept=".pdf,.png" th:field="*{einverstaendnisErklaerung}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="notfallkontakt">Name Notfallkontakt</label>
+                        <input type="text" class="form-control" id="notfallkontakt" th:field="*{nameNotfallkontakt}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nummerNotfallkontakt">Notfallkontakt Nummer</label>
+                        <input type="tel" class="form-control" id="nummerNotfallkontakt" th:field="*{nummerNotfallkontakt}">
+                    </div>
+                </div>
+            </div>
+            <!--                    </div>-->
+            <button type="submit" class="btn btn-primary">Anmelden</button>
+            <!-- todo: shuttles
+            <div class="form-group">
+                <label for="nummerNotfallkontakt">Shuttle</label>
+                <input type="checkbox" class="form-control" id="nummerNotfallkontakt" th:select="${brauchtShuttle}">
+            </div>
+            -->
+        </div>
+    </form>
+</div>
+
+<div th:replace="fragments/footer.html :: footer"></div>
+
+<!-- Bootstrap JS libraries -->
+<script th:src="@{/webjars/jquery/3.7.1/jquery.slim.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.11.7/umd/popper.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
+
+<script th:inline="javascript">
+    var von = new Date([[${event.von}]]);
+    var lastBirthday = new Date(von.getFullYear() - 18 , von.getMonth(), von.getDate(), 23, 59, 59); // hasse javascript :)
+    $("document").ready(() => {
+        $("#geburtstag").blur(() => {
+            if(new Date( $("#geburtstag").val() ) <= lastBirthday) {
+                $("#evk-div").hide();
+            } else {
+                $("#evk-div").show();
+            }
+        });
+    });
+</script>
+</body>
+</html>
