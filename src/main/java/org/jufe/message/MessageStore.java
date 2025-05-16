@@ -1,4 +1,4 @@
-package org.jufe.anmeldetool.service.message;
+package org.jufe.message;
 
 import org.springframework.ui.Model;
 
