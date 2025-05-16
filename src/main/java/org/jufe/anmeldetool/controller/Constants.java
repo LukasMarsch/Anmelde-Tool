@@ -20,4 +20,5 @@ public abstract class Constants {
 
     public static final String VIEW_ANMELDE_FORMULAR = "anmeldeFormular";
 
+    public static final String EVENT_FORMULAR = "eventFormular";
 }
