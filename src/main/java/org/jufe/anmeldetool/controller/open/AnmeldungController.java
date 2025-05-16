@@ -42,7 +42,7 @@ public class AnmeldungController extends Constants {
         return new Anmeldung(nextEvent);
     }
 
-    @GetMapping("/anmeldung")
+    @GetMapping
     public String getForm(Model model) {
         model.addAttribute(ENTITY_EVENT, eventService.getNextEvent());
         LOGGER.trace(() -> String.format("add %s to model as %s", ENTITY_EVENT, eventService.getNextEvent()));
