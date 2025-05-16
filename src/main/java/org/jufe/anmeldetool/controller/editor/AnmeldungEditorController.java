@@ -7,5 +7,4 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("anmeldung")
-public class AnmeldungController {
-}
+public class AnmeldungEditorController {}

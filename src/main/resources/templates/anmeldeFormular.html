@@ -14,7 +14,7 @@
 <div class="content py-4">
     <h2 th:text="'Anmeldung ' + ${anmeldung.event.name}"></h2>
     <form class="d-flex flex-column align-items-center" action="#" th:action="@{/anmeldung}" th:object="${anmeldung}" method="post">
-        <input type="hidden" th:field="*{event}" th:value="${session.event}">
+        <input type="" th:field="*{event}" th:value="${anmeldung.event.id}" hidden>
         <div class=" flex-shrink-1">
             <!--                    <div class="d-lg-flex">-->
             <div class="card p-4 mb-4 flex-grow-1">
@@ -145,12 +145,6 @@
             </div>
             <!--                    </div>-->
             <button type="submit" class="btn btn-primary">Anmelden</button>
-            <!-- todo: shuttles
-            <div class="form-group">
-                <label for="nummerNotfallkontakt">Shuttle</label>
-                <input type="checkbox" class="form-control" id="nummerNotfallkontakt" th:select="${brauchtShuttle}">
-            </div>
-            -->
         </div>
     </form>
 </div>

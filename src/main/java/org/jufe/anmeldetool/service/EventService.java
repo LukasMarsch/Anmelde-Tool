@@ -1,23 +1,21 @@
 package org.jufe.anmeldetool.service;
 
-import lombok.RequiredArgsConstructor;
-import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.entity.event.Tarif;
 import org.jufe.anmeldetool.repository.event.EventRepository;
-import org.springframework.lang.NonNull;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
-public class EventService {
+public class EventService extends BaseService<Event> {
 
-    private final EventRepository eventRepository;
+    @Autowired
+    public EventService(EventRepository repo) {
+        super(repo);
+    }
 
     public Event getNextEvent() {
         return Event.builder()
@@ -26,12 +24,6 @@ public class EventService {
                     .bis(LocalDate.of(2029, 1, 4))
                     .tarif(Set.of(new Tarif(LocalDate.of(2025, 1, 1), 30.0D)))
                     .build();
-    }
-
-    @Transactional
-    public void addAnmeldungToEventById(@NonNull UUID event, @NonNull Anmeldung anmeldung) {
-        eventRepository.getReferenceById(event)
-                       .addAnmeldung(anmeldung);
     }
 
 }
