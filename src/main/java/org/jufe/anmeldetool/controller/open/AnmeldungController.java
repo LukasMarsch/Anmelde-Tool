@@ -61,7 +61,6 @@ public class AnmeldungController extends Constants {
         } catch (Exception e) {
             messages.put(ENTITY_SUCCESS, FALSE.toString());
             messages.put(ENTITY_MESSAGE, "Die Anmeldung konnte nicht gespeichert werden.");
-            messages.put(ENTITY_TRACE, e.getMessage());
             LOGGER.error(e::getMessage);
         }
         messages.addToModel(model);
