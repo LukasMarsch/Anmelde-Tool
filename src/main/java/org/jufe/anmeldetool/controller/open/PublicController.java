@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/anmeldung")
+@RequestMapping("/")
 public class PublicController extends Constants {
 
     private final EventService eventService;
@@ -23,10 +23,15 @@ public class PublicController extends Constants {
         return new Anmeldung(eventService.getNextEvent());
     }
 
-    @GetMapping
+    @GetMapping("/anmeldung")
     public String getForm(Model model, HttpSession session) {
         model.addAttribute(ENTITY_EVENT, eventService.getNextEvent());
         return VIEW_ANMELDE_FORMULAR;
+    }
+
+    @GetMapping
+    public String index() {
+        return REDIRECT_ANMELDUNG;
     }
 
 }
