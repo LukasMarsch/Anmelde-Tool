@@ -72,4 +72,8 @@ public class Event extends BaseEntity implements Serializable {
         this.shuttles.remove(shuttle);
     }
 
+    @Override
+    public String toString() {
+        return "Event [name=" + name + ", von=" + von + ", bis=" + bis;
+    }
 }
