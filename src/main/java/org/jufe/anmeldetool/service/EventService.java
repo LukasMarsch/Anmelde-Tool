@@ -43,6 +43,8 @@ public class EventService {
     }
 
     public Optional<Event> getEventById(@NonNull UUID eventId) {
-           return eventRepository.findById(eventId);
+        Optional<Event> event = eventRepository.findById(eventId);
+        event.ifPresent(Event::berechneTeilnehmerStatistik);
+        return event;
     }
 }

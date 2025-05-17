@@ -8,6 +8,8 @@ public abstract class Constants {
 
     public static final String ENTITY_EVENT = "event";
 
+    public static final String ENTITY_EVENT_LISTE = "eventListe";
+
     public static final String ENTITY_ANMELDUNG = "anmeldung";
 
     public static final String MESSAGE_ANMELDUNG_SAVED = "Anmeldung erfolgreich gespeichert";
@@ -19,10 +21,6 @@ public abstract class Constants {
     public static final String REDIRECT_SHUTTLE = "redirect:/app/shuttle";
 
     public static final String REDIRECT_EVENT = "redirect:/event";
-
-    public static final String VAR_EVENT_LISTE = "eventListe";
-
-    public static final String VAR_SINGLE_EVENT = "eventSingle";
 
     public static final String VIEW_EVENT_DETAIL = "admin/eventDetail";
 

@@ -14,21 +14,22 @@
 
 <div class="content py-4">
     <h2>Events</h2>
-    <div th:each="event: ${eventListe}" class="">
+    <div th:each="event: ${eventListe}">
         <hr>
-        <div class="grid-container">
-            <div class="name" th:text="${event.name}"></div>
-            <div class="date" th:text="${event.von}"></div>
-            <div class="date" th:text="${event.bis}"></div>
-            <div  class="flex-container">
-                <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}">Test: </div>
-                <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
-                <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
-                <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
+        <a th:href="@{/event/{id}(id=${event.id})}">
+            <div class="grid-container">
+                <div class="name" th:text="${event.name}"></div>
+                <div class="date" th:text="${event.von}"></div>
+                <div class="date" th:text="${event.bis}"></div>
+                <div class="flex-container">
+                    <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}"></div>
+                    <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
+                    <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
+                    <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
-
 </div>
 
 <div th:replace="fragments/footer.html :: footer"></div>

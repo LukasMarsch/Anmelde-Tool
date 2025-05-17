@@ -29,7 +29,7 @@ public class EventController extends Constants {
 
     @GetMapping
     public String getListForm(Model model, HttpSession session) {
-        model.addAttribute(VAR_EVENT_LISTE, eventService.getAllEvents());
+        model.addAttribute(ENTITY_EVENT_LISTE, eventService.getAllEvents());
         return VIEW_EVENT_DASHBOARD;
     }
 
@@ -39,7 +39,7 @@ public class EventController extends Constants {
         if (e.isEmpty()) {
             return REDIRECT_EVENT;
         }
-        model.addAttribute(VAR_SINGLE_EVENT, e.get());
+        model.addAttribute(ENTITY_EVENT, e.get());
         return VIEW_EVENT_DETAIL;
     }
 }

@@ -12,7 +12,12 @@
 <body>
 
 <div class="content py-4">
-    <h2>Event TBD</h2>
+    <h2 th:text="${event.name}"></h2>
+
+    <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}"></div>
+    <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
+    <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
+    <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
 
 </div>
 
