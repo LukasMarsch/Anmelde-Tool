@@ -3,8 +3,6 @@ package org.jufe.anmeldetool.wrapper;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 
@@ -15,8 +13,6 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 public class TeilnehmerStatistik {
-
-    private static final Logger logger = LogManager.getLogger();
 
     private int angemeldet;
     private int teilnehmer;

@@ -17,12 +17,11 @@ public class PostAdresse extends Address {
     private String stadt;
 
     public String getType() {
-        // TODO: isses ditte? no real world use case found yet - they played us for absolute fools
+        // isses ditte? no real world use case found yet - they played us for absolute fools
         return PostAdresse.class.getSimpleName();
     }
 
     public String toString() {
-        //TODO: Adresse mit newline??? \n
         return String.format("%s %s | %s %s", strasse, hausnummer, plz, stadt);
     }
 

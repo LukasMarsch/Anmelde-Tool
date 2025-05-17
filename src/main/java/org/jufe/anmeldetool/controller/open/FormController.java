@@ -20,14 +20,11 @@ public class FormController extends Constants {
 
     private final AnmeldungRepository anmeldungRepository;
 
-    private final EventService eventService;
-
     private static final Logger LOGGER = LogManager.getLogger();
 
     @PostMapping
     public String postForm(@ModelAttribute(name = ENTITY_ANMELDUNG) Anmeldung anmeldung, Model model) {
         try {
-            LOGGER.info("#################");
             LOGGER.info(() -> String.format("%s", anmeldung));
             LOGGER.info(() -> String.format("model: %s", model.getAttribute(ENTITY_ANMELDUNG)));
             anmeldungRepository.save(anmeldung);
