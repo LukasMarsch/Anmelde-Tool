@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Events</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/event.css}">
+    <th:block th:replace="fragments/footer.html :: head"></th:block>
+</head>
+<body>
+
+<div class="content py-4">
+    <h2>Events</h2>
+    <div th:each="event: ${eventListe}" class="">
+        <hr>
+        <div class="grid-container">
+            <div class="name" th:text="${event.name}"></div>
+            <div class="date" th:text="${event.von}"></div>
+            <div class="date" th:text="${event.bis}"></div>
+            <div  class="flex-container">
+                <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}">Test: </div>
+                <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
+                <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
+                <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div th:replace="fragments/footer.html :: footer"></div>
+
+<!-- Bootstrap JS libraries -->
+<script th:src="@{/webjars/jquery/3.7.1/jquery.slim.min.js}"></script>
+<script th:src="@{/webjars/popper.js/2.11.7/umd/popper.js}"></script>
+<script th:src="@{/webjars/bootstrap/5.3.5/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

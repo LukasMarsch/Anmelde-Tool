@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -34,4 +33,16 @@ public class EventService {
                        .addAnmeldung(anmeldung);
     }
 
+
+    public List<Event> getAllEvents() {
+        List<Event> events = eventRepository.findAll();
+        for (Event event : events) {
+            event.berechneTeilnehmerStatistik();
+        }
+        return events;
+    }
+
+    public Optional<Event> getEventById(@NonNull UUID eventId) {
+           return eventRepository.findById(eventId);
+    }
 }

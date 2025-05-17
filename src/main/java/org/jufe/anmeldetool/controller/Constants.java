@@ -1,5 +1,9 @@
 package org.jufe.anmeldetool.controller;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class Constants {
     
     public static final String ENTITY_SUCCESS = "success";
@@ -18,7 +22,15 @@ public abstract class Constants {
 
     public static final String REDIRECT_SHUTTLE = "redirect:/app/shuttle";
 
-    public static final String VIEW_ANMELDE_FORMULAR = "anmeldeFormular";
+    public static final String REDIRECT_EVENT = "redirect:/event";
 
-    public static final String EVENT_FORMULAR = "eventFormular";
+    public static final String VAR_EVENT_LISTE = "eventListe";
+
+    public static final String VAR_SINGLE_EVENT = "eventSingle";
+
+    public static final String VIEW_EVENT_DETAIL = "admin/eventDetail";
+
+    public static final String VIEW_EVENT_DASHBOARD = "admin/event";
+
+    public static final String VIEW_ANMELDE_FORMULAR = "anmeldeFormular";
 }

@@ -5,6 +5,7 @@ import lombok.*;
 import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.reise.Shuttle;
+import org.jufe.anmeldetool.wrapper.TeilnehmerStatistik;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -48,6 +49,9 @@ public class Event extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "event")
     private Set<Tarif> tarif;
 
+    @Transient
+    private TeilnehmerStatistik statistik;
+
     public void addOrganisator(Benutzer benutzer) {
         organisatoren.add(benutzer);
     }
@@ -71,9 +75,7 @@ public class Event extends BaseEntity implements Serializable {
     public void removeShuttle(Shuttle shuttle) {
         this.shuttles.remove(shuttle);
     }
-
-    @Override
-    public String toString() {
-        return "Event [name=" + name + ", von=" + von + ", bis=" + bis;
+    public void berechneTeilnehmerStatistik() {
+        statistik = TeilnehmerStatistik.berechne(anmeldungen);
     }
 }
