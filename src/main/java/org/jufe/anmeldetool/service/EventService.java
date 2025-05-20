@@ -4,10 +4,12 @@ import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.repository.event.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDate;
-import java.util.*;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class EventService extends BaseService<Event> {
@@ -25,9 +27,8 @@ public class EventService extends BaseService<Event> {
         return repository.findFirstByOrderByVonDesc();
     }
 
-
     public List<Event> getAllEvents() {
-        List<Event> events = eventRepository.findAll();
+        List<Event> events = repository.findAll();
         for (Event event : events) {
             event.berechneTeilnehmerStatistik();
         }
@@ -35,8 +36,9 @@ public class EventService extends BaseService<Event> {
     }
 
     public Optional<Event> getEventById(@NonNull UUID eventId) {
-        Optional<Event> event = eventRepository.findById(eventId);
+        Optional<Event> event = repository.findById(eventId);
         event.ifPresent(Event::berechneTeilnehmerStatistik);
         return event;
     }
+
 }

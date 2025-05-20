@@ -3,24 +3,24 @@ package org.jufe.anmeldetool.controller.open;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jufe.anmeldetool.controller.Constants;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.repository.anmeldung.AnmeldungRepository;
-import org.jufe.anmeldetool.service.EventService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static org.jufe.anmeldetool.controller.ControllerConstants.*;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/anmeldung")
-public class FormController extends Constants {
-
-    private final AnmeldungRepository anmeldungRepository;
+public class FormController {
 
     private static final Logger LOGGER = LogManager.getLogger();
+
+    private final AnmeldungRepository anmeldungRepository;
 
     @PostMapping
     public String postForm(@ModelAttribute(name = ENTITY_ANMELDUNG) Anmeldung anmeldung, Model model) {

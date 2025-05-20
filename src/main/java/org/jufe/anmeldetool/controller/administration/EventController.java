@@ -1,8 +1,6 @@
 package org.jufe.anmeldetool.controller.administration;
 
 import jakarta.servlet.http.HttpSession;
-import java.util.Optional;
-import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,18 +8,19 @@ import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.service.EventService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import static org.jufe.anmeldetool.controller.ControllerConstants.ENTITY_EVENT;
-import static org.jufe.anmeldetool.controller.ControllerConstants.EVENT_FORMULAR;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.jufe.anmeldetool.controller.ControllerConstants.*;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/event")
 public class EventController {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private final EventService eventService;
 
@@ -50,6 +49,6 @@ public class EventController {
         }
         model.addAttribute(ENTITY_EVENT, e.get());
         return VIEW_EVENT_DETAIL;
-        feature/admin-controller
     }
+
 }
