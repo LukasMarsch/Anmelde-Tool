@@ -28,6 +28,8 @@ import static org.jufe.anmeldetool.controller.ControllerConstants.*;
 @RequestMapping("/anmeldung")
 public class AnmeldungController {
 
+    private static final Logger LOGGER = LogManager.getLogger();
+
     private final AnmeldungRepository anmeldungRepository;
 
     private final EventService eventService;
@@ -36,13 +38,11 @@ public class AnmeldungController {
 
     private final MailService emailService;
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
     @ModelAttribute(name = ENTITY_ANMELDUNG)
     public Anmeldung setUpForm() {
         Event nextEvent = eventService.getNextEvent();
         eventRepository.save(nextEvent);
-        LOGGER.trace(() -> String.format("Set up form with next Event: %s", nextEvent.toString()));
+        LOGGER.trace(() -> String.format("Set up form with next Event: %s", nextEvent));
         return new Anmeldung(nextEvent);
     }
 
