@@ -33,6 +33,10 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     private InternetAddress mail;
 
+    @OneToOne
+    @Nullable
+    private Teilnehmer teilnehmer;
+
     private PostAdresse adresse;
 
     private Kirchenbezirk bezirk;
@@ -79,6 +83,14 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     public void removeEssen(Essen essen) {
         anwesend.remove(essen);
+    }
+
+    public void setTeilnehmer(Optional<Teilnehmer> teilnehmer) {
+        if (teilnehmer.isPresent()) this.teilnehmer = teilnehmer.get();
+    }
+
+    public Optional<Teilnehmer> getTeilnehmer() {
+        return Optional.ofNullable(teilnehmer);
     }
 
     public Optional<byte[]> getEinverstaendnisErklaerung() {

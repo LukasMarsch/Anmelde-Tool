@@ -8,6 +8,8 @@ public final class ControllerConstants {
 
     public static final String ENTITY_EVENT = "event";
 
+    public static final String ENTITY_EVENT_LISTE = "eventListe";
+
     public static final String ENTITY_ANMELDUNG = "anmeldung";
 
     public static final String ENTITY_TRACE = "trace";
@@ -20,8 +22,13 @@ public final class ControllerConstants {
 
     public static final String REDIRECT_SHUTTLE = "redirect:/app/shuttle";
 
-    public static final String VIEW_ANMELDE_FORMULAR = "anmeldeFormular";
+    public static final String REDIRECT_EVENT = "redirect:/event";
 
     public static final String EVENT_FORMULAR = "eventFormular";
 
+    public static final String VIEW_EVENT_DETAIL = "admin/eventDetail";
+
+    public static final String VIEW_EVENT_DASHBOARD = "admin/event";
+
+    public static final String VIEW_ANMELDE_FORMULAR = "anmeldeFormular";
 }
