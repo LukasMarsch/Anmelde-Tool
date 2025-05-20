@@ -24,8 +24,8 @@ public class BaseEntity {
         return id;
     }
 
-    protected void setId() {
-
+    protected void setId(UUID uuid) {
+        this.id = uuid;
     }
 
 }
