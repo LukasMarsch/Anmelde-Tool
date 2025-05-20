@@ -16,4 +16,16 @@ public class BaseEntity {
 
     protected BaseEntity() {}
 
+    public BaseEntity(UUID id) {
+        this.id = id;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    protected void setId(UUID uuid) {
+        this.id = uuid;
+    }
+
 }

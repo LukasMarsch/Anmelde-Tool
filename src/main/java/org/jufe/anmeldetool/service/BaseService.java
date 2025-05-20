@@ -13,9 +13,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public abstract class BaseService<T> {
 
-    private static final Logger LOGGER = LogManager.getLogger();
-
     protected final JpaRepository<T, UUID> repo;
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     @Transactional
     public <S extends T> void save(S entity) {

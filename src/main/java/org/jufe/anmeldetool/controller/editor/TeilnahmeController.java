@@ -20,7 +20,7 @@ import static org.jufe.anmeldetool.controller.ControllerConstants.*;
 @SuppressWarnings("unused")
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(REQUEST_MAPPING_TEILNEHMER)
+@RequestMapping(ENTITY_TEILNEHMER)
 public class TeilnahmeController {
 
     private static final Logger LOGGER = LogManager.getLogger();

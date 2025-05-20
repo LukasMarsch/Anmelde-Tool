@@ -1,41 +1,49 @@
 package org.jufe.anmeldetool.service;
 
-import lombok.RequiredArgsConstructor;
-import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.event.Event;
-import org.jufe.anmeldetool.entity.event.Tarif;
 import org.jufe.anmeldetool.repository.event.EventRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
-public class EventService {
+public class EventService extends BaseService<Event> {
 
-    private final EventRepository eventRepository;
+    private final EventRepository repository;
 
+    @Autowired
+    public EventService(EventRepository repository) {
+        super(repository);
+        this.repository = repository;
+    }
+
+    @Cacheable
     public Event getNextEvent() {
-        return Event.builder()
-                    .von(LocalDate.of(2029, 1, 1))
-                    .name("JuFe '29")
-                    .bis(LocalDate.of(2029, 1, 4))
-                    .tarif(Set.of(new Tarif(LocalDate.of(2025, 1, 1), 30.0D)))
-                    .build();
+        Event e = repository.findFirstByOrderByVonDesc();
+        if (e == null) {
+            e = init();
+        }
+        return e;
     }
 
-    @Transactional
-    public void addAnmeldungToEventById(@NonNull UUID event, @NonNull Anmeldung anmeldung) {
-        eventRepository.getReferenceById(event)
-                       .addAnmeldung(anmeldung);
+    private Event init() {
+        Event e = Event.builder()
+                       .name("JuFe 2018")
+                       .von(LocalDate.of(2018, 1, 1))
+                       .bis(LocalDate.of(2018, 1, 3))
+                       .build();
+        repo.save(e);
+        return e;
     }
-
 
     public List<Event> getAllEvents() {
-        List<Event> events = eventRepository.findAll();
+        List<Event> events = repository.findAll();
         for (Event event : events) {
             event.berechneTeilnehmerStatistik();
         }
@@ -43,8 +51,9 @@ public class EventService {
     }
 
     public Optional<Event> getEventById(@NonNull UUID eventId) {
-        Optional<Event> event = eventRepository.findById(eventId);
+        Optional<Event> event = repository.findById(eventId);
         event.ifPresent(Event::berechneTeilnehmerStatistik);
         return event;
     }
+
 }

@@ -15,6 +15,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class MailService {
 
+    public final InternetAddress from;
+
+    private final JavaMailSender mailSender;
+
     private static final String SUBJECT = "Deine Anmeldung für: ";
 
     /* @formatter:off */
@@ -26,10 +30,6 @@ Bitte überprüfe deine persönlichen Daten <a href='%s'>hier</a>und bestätige 
 Mit freundlichen Grüßen,
 Dein JuFe-Team!
             """;
-
-    public final InternetAddress from;
-
-    private final JavaMailSender mailSender;
     /* @formatter:on */
 
     @Autowired

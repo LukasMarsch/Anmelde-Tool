@@ -15,7 +15,6 @@ import java.util.UUID;
 
 import static org.jufe.anmeldetool.controller.ControllerConstants.*;
 
-@SuppressWarnings("unused")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/event")

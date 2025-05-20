@@ -1,5 +1,6 @@
 package org.jufe.anmeldetool.controller.open;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -69,7 +70,7 @@ public class AnmeldungController {
         }
         try {
             emailService.sendConfirmationMail(anmeldung.getMail(), anmeldung.getEvent(), anmeldung);
-        } catch (Throwable e) {
+        } catch (MessagingException e) {
             messages.put(ENTITY_SUCCESS, FALSE.toString());
             messages.put(ENTITY_MESSAGE,
                     "Wir konnten dir leider keine Email-schicken. Bitte überprüfe deine Email-Adresse oder kontaktieren das JuFe-Team.");
