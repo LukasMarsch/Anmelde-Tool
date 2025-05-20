@@ -4,7 +4,6 @@ import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jufe.anmeldetool.controller.Constants;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.repository.anmeldung.AnmeldungRepository;
@@ -22,11 +21,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import static java.lang.Boolean.FALSE;
 import static java.lang.Boolean.TRUE;
+import static org.jufe.anmeldetool.controller.ControllerConstants.*;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/anmeldung")
-public class AnmeldungController extends Constants {
+public class AnmeldungController {
 
     private final AnmeldungRepository anmeldungRepository;
 

@@ -1,6 +1,6 @@
 package org.jufe.anmeldetool.controller;
 
-public abstract class Constants {
+public final class ControllerConstants {
 
     public static final String ENTITY_SUCCESS = "success";
 
