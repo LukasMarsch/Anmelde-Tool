@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.jufe.anmeldetool.controller.ControllerConstants.REDIRECT_ANMELDUNG;
 
+@SuppressWarnings("unused")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/")
