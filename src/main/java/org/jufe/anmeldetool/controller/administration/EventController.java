@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.service.EventService;
 import org.springframework.stereotype.Controller;
@@ -27,6 +28,11 @@ public class EventController {
     @ModelAttribute(name = ENTITY_EVENT)
     public Event setUpForm() {
         return new Event();
+    }
+
+    @ModelAttribute(name = ENTITY_TEILNEHMER)
+    public Teilnehmer setUpTNForm() {
+        return new Teilnehmer();
     }
 
     @GetMapping

@@ -5,6 +5,7 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.jufe.address.PostAdresse;
 import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.entschuldigung.Entschuldigung;
@@ -20,6 +21,7 @@ import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
+@NoArgsConstructor
 @Entity
 public class Anmeldung extends BaseEntity implements Serializable {
 
