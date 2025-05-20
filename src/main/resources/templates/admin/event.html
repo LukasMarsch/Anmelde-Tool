@@ -3,12 +3,12 @@
 <head>
     <title>Events</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/event.css}">
-    <th:block th:replace="fragments/footer.html :: head"></th:block>
+    <th:block th:replace="~{fragments/footer.html :: head}"></th:block>
 </head>
 <body>
 
@@ -32,7 +32,7 @@
     </div>
 </div>
 
-<div th:replace="fragments/footer.html :: footer"></div>
+<div th:replace="~{fragments/footer.html :: footer}"></div>
 
 <!-- Bootstrap JS libraries -->
 <script th:src="@{/webjars/jquery/3.7.1/jquery.slim.min.js}"></script>

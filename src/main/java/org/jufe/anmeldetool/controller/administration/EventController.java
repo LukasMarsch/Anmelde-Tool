@@ -2,23 +2,26 @@ package org.jufe.anmeldetool.controller.administration;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.jufe.anmeldetool.controller.Constants;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.service.EventService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.UUID;
 
+import static org.jufe.anmeldetool.controller.ControllerConstants.*;
+
+@SuppressWarnings("unused")
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/event")
-public class EventController extends Constants {
+public class EventController {
+
+    private static final Logger LOGGER = LogManager.getLogger();
 
     private final EventService eventService;
 
@@ -33,6 +36,12 @@ public class EventController extends Constants {
         return VIEW_EVENT_DASHBOARD;
     }
 
+    @PostMapping
+    public String postForm(@ModelAttribute(name = ENTITY_EVENT) Event event, Model model) {
+        LOGGER.info(() -> String.format("%s", event));
+        return "true";
+    }
+
     @GetMapping("/{id}")
     public String getIdForm(@PathVariable("id") UUID id, Model model, HttpSession session) {
         Optional<Event> e = eventService.getEventById(id);
@@ -42,4 +51,5 @@ public class EventController extends Constants {
         model.addAttribute(ENTITY_EVENT, e.get());
         return VIEW_EVENT_DETAIL;
     }
+
 }

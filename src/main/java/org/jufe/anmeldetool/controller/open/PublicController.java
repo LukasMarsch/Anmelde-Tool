@@ -2,7 +2,6 @@ package org.jufe.anmeldetool.controller.open;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-import org.jufe.anmeldetool.controller.Constants;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.repository.event.EventRepository;
@@ -13,10 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static org.jufe.anmeldetool.controller.ControllerConstants.*;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/")
-public class PublicController extends Constants {
+public class PublicController {
 
     private final EventService eventService;
 

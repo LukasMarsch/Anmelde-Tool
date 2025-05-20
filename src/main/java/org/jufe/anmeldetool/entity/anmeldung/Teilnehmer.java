@@ -10,15 +10,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jufe.anmeldetool.entity.BaseEntity;
 
+import java.io.Serializable;
 import java.time.Period;
-import java.util.Optional;
 
 @Getter
 @Setter
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Teilnehmer extends BaseEntity {
+public class Teilnehmer extends BaseEntity implements Serializable {
 
     @OneToOne
     private Anmeldung anmeldung;
@@ -55,14 +55,6 @@ public class Teilnehmer extends BaseEntity {
             return Alter.U16;
         }
         throw new IllegalArgumentException("Alter muss erreichbar sein.");
-    }
-
-    public void setAnmeldung(Optional<Anmeldung> anmeldung) {
-        if (anmeldung.isPresent()) this.anmeldung = anmeldung.get();
-    }
-
-    public Optional<Anmeldung> getAnmeldung() {
-        return Optional.ofNullable(anmeldung);
     }
 
 }

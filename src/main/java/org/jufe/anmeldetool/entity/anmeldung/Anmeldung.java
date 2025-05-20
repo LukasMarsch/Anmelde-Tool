@@ -85,14 +85,6 @@ public class Anmeldung extends BaseEntity implements Serializable {
         anwesend.remove(essen);
     }
 
-    public void setTeilnehmer(Optional<Teilnehmer> teilnehmer) {
-        if (teilnehmer.isPresent()) this.teilnehmer = teilnehmer.get();
-    }
-
-    public Optional<Teilnehmer> getTeilnehmer() {
-        return Optional.ofNullable(teilnehmer);
-    }
-
     public Optional<byte[]> getEinverstaendnisErklaerung() {
         return null != einverstaendnisErklaerung ? Optional.of(einverstaendnisErklaerung) : Optional.empty();
     }
