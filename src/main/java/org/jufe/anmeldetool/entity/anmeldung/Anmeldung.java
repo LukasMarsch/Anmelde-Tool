@@ -1,6 +1,5 @@
 package org.jufe.anmeldetool.entity.anmeldung;
 
-import io.micrometer.common.lang.NonNull;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -12,21 +11,21 @@ import org.jufe.anmeldetool.entity.entschuldigung.Entschuldigung;
 import org.jufe.anmeldetool.entity.event.Essen;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.entity.reise.Halt;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
-@Data
 @NoArgsConstructor
+@Data
 @Entity
 public class Anmeldung extends BaseEntity implements Serializable {
 
     @ManyToOne
-    @org.springframework.lang.NonNull
+    @NonNull
     private Event event;
 
     private String vorname;
@@ -85,30 +84,6 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     public void removeEssen(Essen essen) {
         anwesend.remove(essen);
-    }
-
-    public Optional<byte[]> getEinverstaendnisErklaerung() {
-        return null != einverstaendnisErklaerung ? Optional.of(einverstaendnisErklaerung) : Optional.empty();
-    }
-
-    protected void setEinverstaendnisErklaerung(byte[] einverstaendnisErklaerung) {
-        this.einverstaendnisErklaerung = einverstaendnisErklaerung;
-    }
-
-    public void setEinverstaendnisErklaerung(Optional<byte[]> einverstaendnisErklaerung) {
-        einverstaendnisErklaerung.ifPresent(this::setEinverstaendnisErklaerung);
-    }
-
-    public Optional<Halt> getNimmtShuttleVon() {
-        return this.nimmtShuttleVon != null ? Optional.of(this.nimmtShuttleVon) : Optional.empty();
-    }
-
-    public void setNimmtShuttleVon(@NonNull Optional<Halt> nimmtShuttleVon) throws NullPointerException {
-        nimmtShuttleVon.ifPresent(this::setNimmtShuttleVon);
-    }
-
-    public void setNimmtShuttleVon(@NonNull Halt nimmtShuttleVon) {
-        this.nimmtShuttleVon = nimmtShuttleVon;
     }
 
 }

@@ -58,7 +58,7 @@ public class AnmeldungController {
     @Transactional
     public String postForm(@ModelAttribute(name = ENTITY_ANMELDUNG) Anmeldung anmeldung, Model model) {
         LOGGER.trace(() -> String.format("save %s from model as %s", ENTITY_ANMELDUNG, anmeldung));
-        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection") MessageStore messages = new MessageStore();
+        MessageStore messages = new MessageStore();
         try {
             anmeldungRepository.save(anmeldung);
             messages.put(ENTITY_SUCCESS, TRUE.toString());
@@ -76,7 +76,7 @@ public class AnmeldungController {
                     "Wir konnten dir leider keine Email-schicken. Bitte überprüfe deine Email-Adresse oder kontaktieren das JuFe-Team.");
             LOGGER.error(e::getMessage);
         }
-        messages.addToModel(model);
+        model.addAllAttributes(messages);
         return REDIRECT_ANMELDUNG;
     }
 
