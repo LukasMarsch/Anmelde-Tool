@@ -35,12 +35,6 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     private InternetAddress mail;
 
-    @OneToOne(fetch = FetchType.EAGER, optional = true, orphanRemoval = true, cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "teilnehmer_id", referencedColumnName = "id")
-    @Nullable
-    @EqualsAndHashCode.Exclude
-    private Teilnehmer teilnehmer;
-
     private PostAdresse adresse;
 
     private Kirchenbezirk bezirk;
@@ -56,9 +50,9 @@ public class Anmeldung extends BaseEntity implements Serializable {
     private Isst isst;
 
     @ManyToMany
-    private Set<Essen> anwesend;
+    private Set<Essen> mahlzeitenAnwesend;
 
-    private boolean schwimmer;
+    private boolean schwimmer = false;
 
     @Nullable
     private String anmerkung;
@@ -77,16 +71,41 @@ public class Anmeldung extends BaseEntity implements Serializable {
     @OneToOne
     private Entschuldigung entschuldigung;
 
+    private boolean bestaetigt = false;
+
+    private boolean angekommen = false;
+
+    private boolean anwesend = false;
+
+    @Enumerated(EnumType.STRING)
+    private Rolle rolle;
+
     public Anmeldung(Event event) {
         this.event = event;
     }
 
     public void addEssen(Essen essen) {
-        anwesend.add(essen);
+        mahlzeitenAnwesend.add(essen);
     }
 
     public void removeEssen(Essen essen) {
-        anwesend.remove(essen);
+        mahlzeitenAnwesend.remove(essen);
+    }
+
+    public Alter alter() throws IllegalArgumentException {
+        int alter = geburtstag.until(event.getVon())
+                              .getYears();
+        if (alter < 0) {
+            throw new IllegalArgumentException("Alter kann nicht negativ sein");
+        }
+        if (alter >= 18) {
+            return Alter.O18;
+        } else if (alter >= 16) {
+            return Alter.U18;
+        } else if (alter >= 0) {
+            return Alter.U16;
+        }
+        throw new IllegalArgumentException("Alter muss erreichbar sein.");
     }
 
     public Alter alter() throws IllegalArgumentException {
