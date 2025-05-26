@@ -1,15 +1,16 @@
 package org.jufe.anmeldetool.entity.anmeldung;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.jufe.anmeldetool.entity.BaseEntity;
 
 import java.io.Serializable;
 import java.time.Period;
+import java.util.Objects;
 
-@Getter
-@Setter
+@EqualsAndHashCode(callSuper = false)
+@Data
 @Entity
 public class Teilnehmer extends BaseEntity implements Serializable {
 
@@ -39,14 +40,14 @@ public class Teilnehmer extends BaseEntity implements Serializable {
         this.bestaetigungVersendet = false;
     }
 
-    public Alter alter() throws IllegalArgumentException {
-        Period alter = anmeldung.getGeburtstag()
-                                .until(anmeldung.getEvent()
-                                                .getVon());
+    public Alter alter() throws IllegalArgumentException, NullPointerException {
+        Period alter = Objects.requireNonNull(anmeldung)
+                              .getGeburtstag()
+                              .until(anmeldung.getEvent()
+                                              .getVon());
         if (alter.isNegative()) {
             throw new IllegalArgumentException("Alter kann nicht negativ sein");
         }
-
         if (alter.getYears() >= 18) {
             return Alter.O18;
         } else if (alter.getYears() >= 16) {
@@ -54,7 +55,7 @@ public class Teilnehmer extends BaseEntity implements Serializable {
         } else if (alter.getYears() >= 0) {
             return Alter.U16;
         }
-        throw new IllegalArgumentException("Alter muss erreichbar sein.");
+        throw new IllegalArgumentException("Alter muss vorhanden sein.");
     }
 
 }
