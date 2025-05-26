@@ -1,6 +1,5 @@
 package org.jufe.anmeldetool.controller.open;
 
-import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +9,7 @@ import org.jufe.anmeldetool.repository.anmeldung.AnmeldungRepository;
 import org.jufe.anmeldetool.repository.event.EventRepository;
 import org.jufe.anmeldetool.service.EventService;
 import org.jufe.anmeldetool.service.MailService;
+import org.jufe.anmeldetool.service.ShuttleService;
 import org.jufe.message.MessageStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,10 +37,11 @@ public class AnmeldungController {
 
     private final MailService emailService;
 
+    private final ShuttleService shuttleService;
+
     @ModelAttribute(name = ENTITY_ANMELDUNG)
     public Anmeldung setUpForm() {
         Event nextEvent = eventService.getNextEvent();
-        eventRepository.save(nextEvent);
         LOGGER.trace(() -> String.format("Set up form with next Event: %s", nextEvent));
         return new Anmeldung(nextEvent);
     }
@@ -48,6 +49,8 @@ public class AnmeldungController {
     @GetMapping
     public String getForm(Model model) {
         model.addAttribute(ENTITY_EVENT, eventService.getNextEvent());
+        model.addAttribute(ENTITY_HALTESTELLEN_HIN, shuttleService.getAllHinHaltestellen());
+        model.addAttribute(ENTITY_HALTESTELLEN_RUECK, shuttleService.getAllRueckHaltestellen());
         LOGGER.trace(() -> String.format("add %s to model as %s", ENTITY_EVENT, eventService.getNextEvent()));
         return VIEW_ANMELDE_FORMULAR;
     }
@@ -66,14 +69,17 @@ public class AnmeldungController {
             messages.put(ENTITY_MESSAGE, "Die Anmeldung konnte nicht gespeichert werden.");
             LOGGER.error(e::getMessage);
         }
+
+        // deactivate for testing purposes
+        /*
         try {
-            emailService.sendConfirmationMail(anmeldung.getMail(), anmeldung.getEvent(), anmeldung);
+            // emailService.sendConfirmationMail(anmeldung.getMail(), anmeldung.getEvent(), anmeldung);
         } catch (MessagingException e) {
             messages.put(ENTITY_SUCCESS, false);
             messages.put(ENTITY_MESSAGE,
                     "Wir konnten dir leider keine Email-schicken. Bitte überprüfe deine Email-Adresse oder kontaktieren das JuFe-Team.");
             LOGGER.error(e::getMessage);
-        }
+        } */
         // todo: auf anreise weiterleiten
         messages.put(ENTITY_ANMELDUNG, anmeldung);
         model.addAttribute(ENTITY_EVENT, eventService.getNextEvent());

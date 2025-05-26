@@ -1,31 +1,46 @@
 package org.jufe.anmeldetool.service;
 
+import lombok.RequiredArgsConstructor;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.entity.reise.Halt;
 import org.jufe.anmeldetool.entity.reise.Shuttle;
-import org.jufe.anmeldetool.repository.reise.HaltRepository;
 import org.jufe.anmeldetool.repository.reise.ShuttleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 
 @Service
-public class ShuttleService extends BaseService<Shuttle> {
+@RequiredArgsConstructor
+public class ShuttleService {
 
     private final ShuttleRepository shuttleRepository;
 
-    private final HaltRepository haltRepository;
-
-    @Autowired
-    public ShuttleService(ShuttleRepository shuttleRepository, HaltRepository haltRepository) {
-        super(shuttleRepository);
-        this.shuttleRepository = shuttleRepository;
-        this.haltRepository = haltRepository;
+    public Shuttle createEmptyShuttle(Event e) {
+        return shuttleRepository.save(new Shuttle(e, new HashSet<>(), new HashSet<>(), ""));
     }
 
-    public Shuttle createShuttle(Event e, Set<Halt> haltestellen, String detail) {
-        return shuttleRepository.save(new Shuttle(e, haltestellen, detail));
+    public List<Halt> getAllHinHaltestellen() {
+        List<Shuttle> shuttleList = shuttleRepository.findAll();
+        List<Halt> alleHaltestellen = new ArrayList<>();
+        for (Shuttle shuttle : shuttleList) {
+            alleHaltestellen.addAll(shuttle.getHinHaltestellen());
+        }
+        return alleHaltestellen;
+    }
+
+    public List<Halt> getAllRueckHaltestellen() {
+        List<Shuttle> shuttleList = shuttleRepository.findAll();
+        List<Halt> alleHaltestellen = new ArrayList<>();
+        for (Shuttle shuttle : shuttleList) {
+            alleHaltestellen.addAll(shuttle.getRueckHaltestellen());
+        }
+        return alleHaltestellen;
+    }
+
+    public void save(Shuttle shuttle) {
+        shuttleRepository.save(shuttle);
     }
 
 }

@@ -16,7 +16,6 @@ import org.springframework.lang.Nullable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
@@ -66,7 +65,11 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     @ManyToOne
     @Nullable
-    private Halt nimmtShuttleVon;
+    private Halt haltestelleHinfahrt;
+
+    @ManyToOne
+    @Nullable
+    private Halt haltestelleRueckfahrt;
 
     @OneToOne
     private Entschuldigung entschuldigung;
@@ -103,22 +106,6 @@ public class Anmeldung extends BaseEntity implements Serializable {
         } else if (alter >= 16) {
             return Alter.U18;
         } else if (alter >= 0) {
-            return Alter.U16;
-        }
-        throw new IllegalArgumentException("Alter muss erreichbar sein.");
-    }
-
-    public Alter alter() throws IllegalArgumentException {
-        Period alter = geburtstag.until(event.getVon());
-        if (alter.isNegative()) {
-            throw new IllegalArgumentException("Alter kann nicht negativ sein");
-        }
-
-        if (alter.getYears() >= 18) {
-            return Alter.O18;
-        } else if (alter.getYears() >= 16) {
-            return Alter.U18;
-        } else if (alter.getYears() >= 0) {
             return Alter.U16;
         }
         throw new IllegalArgumentException("Alter muss erreichbar sein.");

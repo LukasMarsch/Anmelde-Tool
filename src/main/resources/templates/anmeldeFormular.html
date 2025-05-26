@@ -84,6 +84,27 @@
                 </div>
             </div>
             <div class="card p-4 mb-4 flex-grow-1">
+                <h3 class="card-title">An- Abreise</h3>
+                <div class="card-body">
+                    <div class="form-group pt-1">
+                        <label for="hinfahrt">Haltestelle Hinfahrt</label>
+                        <select class="form-control" id="hinfahrt" required th:field="*{haltestelleHinfahrt}">
+                            <option th:each="haltestelle : ${haltestellenHin}"
+                                    th:text="${haltestelle.ort.stadt}"
+                                    th:value="${haltestelle.id}">
+                            </option>
+                        </select>
+                        <label for="rueckfahrt">Haltestelle Rückfahrt</label>
+                        <select class="form-control" id="rueckfahrt" required th:field="*{haltestelleRueckfahrt}">
+                            <option th:each="haltestelle : ${haltestellenRueck}"
+                                    th:text="${haltestelle.ort.stadt}"
+                                    th:value="${haltestelle.id}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-4 mb-4 flex-grow-1">
                 <h3 class="card-title">Persönliche Angaben</h3>
                 <div class="card-body">
                     <div class="form-group pt-1">
