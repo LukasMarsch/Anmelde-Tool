@@ -1,21 +1,20 @@
 package org.jufe.anmeldetool.service;
 
-import org.jufe.Result.Result;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import org.jufe.Result;
 import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 import org.jufe.anmeldetool.repository.anmeldung.TeilnehmerRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Getter
+@RequiredArgsConstructor
 @Service
-public class TeilnehmerService extends BaseService<Teilnehmer> {
+public class TeilnehmerService {
 
-    TeilnehmerRepository repository;
-
-    public TeilnehmerService(TeilnehmerRepository repository) {
-        super(repository);
-        this.repository = repository;
-    }
+    private final TeilnehmerRepository repository;
 
     public Result<Teilnehmer> toTeilnehmer(Teilnehmer teilnehmer) {
         Optional<Teilnehmer> teilOpt;
@@ -29,7 +28,7 @@ public class TeilnehmerService extends BaseService<Teilnehmer> {
             teilnehmer.setAngekommen(false);
             teilnehmer.setAnwesend(false);
             teilnehmer.setRolle(null);
-            repo.save(teilnehmer);
+            repository.save(teilnehmer);
             r = Result.of(teilnehmer);
         } else {
             r = Result.of(new Exception("Teilnahme liegt schon vor"));

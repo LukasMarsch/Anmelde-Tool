@@ -4,18 +4,20 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
+import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 import org.jufe.anmeldetool.entity.reise.Shuttle;
 import org.jufe.anmeldetool.wrapper.TeilnehmerStatistik;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity()
+@Entity
 @Table(name = "EVENTTABLE")
 @Builder
 public class Event extends BaseEntity implements Serializable {
@@ -26,11 +28,14 @@ public class Event extends BaseEntity implements Serializable {
 
     private LocalDate bis;
 
-    @ManyToOne
-    private Essen erstesEssen;
+    @Enumerated(EnumType.STRING)
+    private Mahlzeit erstesMahlzeit;
 
-    @ManyToOne
-    private Essen letztesEssen;
+    @Enumerated(EnumType.STRING)
+    private Mahlzeit letzteMahlzeit;
+
+    @OneToMany(mappedBy = "event")
+    private Set<Essen> essen;
 
     private boolean mitKaffee;
 
@@ -46,7 +51,7 @@ public class Event extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "event")
     private Set<Shuttle> shuttles;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
     private Set<Tarif> tarif;
 
     @Transient
@@ -75,7 +80,16 @@ public class Event extends BaseEntity implements Serializable {
     public void removeShuttle(Shuttle shuttle) {
         this.shuttles.remove(shuttle);
     }
+
     public void berechneTeilnehmerStatistik() {
         statistik = TeilnehmerStatistik.berechne(anmeldungen);
     }
+
+    public Set<Teilnehmer> getTeilnehmer() {
+        return anmeldungen.stream()
+                          .filter(a -> a.getTeilnehmer() != null)
+                          .map(Anmeldung::getTeilnehmer)
+                          .collect(Collectors.toUnmodifiableSet());
+    }
+
 }

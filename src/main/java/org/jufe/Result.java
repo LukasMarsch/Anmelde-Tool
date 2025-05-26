@@ -1,4 +1,4 @@
-package org.jufe.Result;
+package org.jufe;
 
 import java.util.NoSuchElementException;
 import java.util.Objects;
@@ -20,15 +20,11 @@ public class Result<T> {
     }
 
     public static <T> Result<T> of(T t) {
-        return new Result(Objects.requireNonNull(t));
+        return new Result<>(Objects.requireNonNull(t));
     }
 
     public static <T, E extends Throwable> Result<T> of(E e) {
-        if (e != null) {
-            return new Result(e);
-        } else {
-            return new Result(new NullPointerException("Cannot create Result from null value"));
-        }
+        return new Result<>(Objects.requireNonNullElseGet(e, () -> new NullPointerException("Cannot create Result from null value")));
     }
 
     public T orElse(T other) {

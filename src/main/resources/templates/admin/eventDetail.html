@@ -19,6 +19,34 @@
     <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
     <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
 
+    <!--<div class="d-flex flex-column align-items-center">
+        <div class="d-flex flex-column w-50">
+            <h2>Teilnehmer</h2>
+            <table class="table table-light ">
+                <thead>
+                <th>Name</th>
+                <th>Alter</th>
+                <th>Angekommen</th>
+                <th>Anwesend</th>
+                </thead>
+                <tbody>
+                <tr th:each="teilnehmer : ${event.getTeilnehmer()}">
+                    <td th:text="${teilnehmer.anmeldung.vorname} + ' ' + ${teilnehmer.anmeldung.nachname}"></td>
+                    <td th:text="${teilnehmer.angekommen}"></td>
+                    <td th:text="${anmeldung.anwesend}"></td>
+                    <td th:text="${}"></td>
+                    <td>
+                        <form class="text-center" method="post" th:action="@{/teilnehmer/{anmeldungId}(anmeldungId=anmeldung.id)}" th:object="${teilnehmer}">
+                            <input hidden th:field="*{anmeldung}" th:value="${anmeldung}">
+                            <button class="btn btn-primary" type="submit"><i class="bi bi-arrow-right-circle-fill"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+
     <div class="d-flex flex-column align-items-center">
         <div class="d-flex flex-column w-50">
             <h2>Anmeldungen</h2>
@@ -37,7 +65,7 @@
                     <td th:text="${anmeldung.geburtstag}"></td>
                     <td th:text="${anmeldung.nummerNotfallkontakt}"></td>
                     <td>
-                        <form class="text-center" method="post" th:action="@{/teilnehmer}" th:object="${teilnehmer}">
+                        <form class="text-center" method="post" th:action="@{/teilnehmer/{anmeldungId}(anmeldungId=${anmeldung.id})}" th:object="${teilnehmer}">
                             <input hidden th:field="*{anmeldung}" th:value="${anmeldung}">
                             <button class="btn btn-primary" type="submit"><i class="bi bi-arrow-right-circle-fill"></i></button>
                         </form>

@@ -24,7 +24,7 @@ import java.util.Set;
 @Entity
 public class Anmeldung extends BaseEntity implements Serializable {
 
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @NonNull
     private Event event;
 
@@ -34,7 +34,7 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     private InternetAddress mail;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "anmeldung", orphanRemoval = true, cascade = CascadeType.PERSIST)
     @Nullable
     private Teilnehmer teilnehmer;
 

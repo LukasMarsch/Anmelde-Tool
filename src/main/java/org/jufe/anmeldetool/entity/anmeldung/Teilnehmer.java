@@ -1,12 +1,7 @@
 package org.jufe.anmeldetool.entity.anmeldung;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.OneToOne;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.jufe.anmeldetool.entity.BaseEntity;
 
@@ -16,14 +11,12 @@ import java.time.Period;
 @Getter
 @Setter
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 public class Teilnehmer extends BaseEntity implements Serializable {
 
-    @OneToOne
+    @OneToOne(orphanRemoval = false, optional = false, fetch = FetchType.LAZY)
     private Anmeldung anmeldung;
 
-    private Boolean angekommen;
+    private boolean angekommen;
 
     private boolean anwesend;
 
@@ -31,6 +24,13 @@ public class Teilnehmer extends BaseEntity implements Serializable {
 
     @Enumerated(EnumType.STRING)
     private Rolle rolle;
+
+    public Teilnehmer() {
+        this.anmeldung = null;
+        this.angekommen = false;
+        this.anwesend = false;
+        this.bestaetigungVersendet = false;
+    }
 
     public Teilnehmer(Anmeldung anmeldung) {
         this.anmeldung = anmeldung;

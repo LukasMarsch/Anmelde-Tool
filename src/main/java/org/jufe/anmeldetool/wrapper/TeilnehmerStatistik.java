@@ -36,7 +36,7 @@ public class TeilnehmerStatistik implements Serializable {
             if (teilnehmer == null)
                 continue;
             stats[1]++; // Anmeldung durch Bezahlung bestätigt -> Teilnehmer
-            if (teilnehmer.getAngekommen()) {
+            if (teilnehmer.isAngekommen()) {
                 stats[3]++; // Teilnehmer auf Grundstück angekommen
                 if (teilnehmer.isAnwesend())
                     stats[4]++; // Teilnehmer MOMENTAN auf Grundstück
