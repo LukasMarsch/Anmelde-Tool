@@ -1,5 +1,6 @@
 package org.jufe.anmeldetool.controller.open;
 
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -70,17 +71,15 @@ public class AnmeldungController {
             LOGGER.error(e::getMessage);
         }
 
-        // deactivate for testing purposes
-        /*
         try {
-            // emailService.sendConfirmationMail(anmeldung.getMail(), anmeldung.getEvent(), anmeldung);
+            emailService.sendConfirmationMail(anmeldung.getMail(), anmeldung.getEvent(), anmeldung);
         } catch (MessagingException e) {
             messages.put(ENTITY_SUCCESS, false);
             messages.put(ENTITY_MESSAGE,
                     "Wir konnten dir leider keine Email-schicken. Bitte überprüfe deine Email-Adresse oder kontaktieren das JuFe-Team.");
             LOGGER.error(e::getMessage);
-        } */
-        // todo: auf anreise weiterleiten
+        }
+        // todo: auf anreise weiterleiten???
         messages.put(ENTITY_ANMELDUNG, anmeldung);
         model.addAttribute(ENTITY_EVENT, eventService.getNextEvent());
         return new ModelAndView(VIEW_ANMELDE_FORMULAR, messages);
