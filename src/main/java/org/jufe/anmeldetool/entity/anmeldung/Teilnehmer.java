@@ -3,7 +3,9 @@ package org.jufe.anmeldetool.entity.anmeldung;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.jufe.anmeldetool.entity.BaseEntity;
+import org.jufe.anmeldetool.entity.event.Event;
 
 import java.io.Serializable;
 import java.time.Period;
@@ -15,8 +17,13 @@ import java.util.Objects;
 public class Teilnehmer extends BaseEntity implements Serializable {
 
     @OneToOne(orphanRemoval = false, optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "anmeldung_id", referencedColumnName = "id")
     @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Anmeldung anmeldung;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Event event;
 
     private Boolean angekommen;
 
@@ -36,9 +43,17 @@ public class Teilnehmer extends BaseEntity implements Serializable {
 
     public Teilnehmer(Anmeldung anmeldung) {
         this.anmeldung = anmeldung;
+        this.event = anmeldung.getEvent();
         this.angekommen = false;
         this.anwesend = false;
         this.bestaetigungVersendet = false;
+    }
+
+    public void setAnmeldung(Anmeldung anmeldung) {
+        this.anmeldung = anmeldung;
+        if (this.event == null) {
+            this.event = anmeldung.getEvent();
+        }
     }
 
     public Alter alter() throws IllegalArgumentException, NullPointerException {

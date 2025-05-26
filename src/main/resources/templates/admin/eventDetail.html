@@ -14,41 +14,37 @@
 <div class="content py-4">
     <h2 th:text="${event.name}"></h2>
 
-    <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}"></div>
-    <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
-    <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
-    <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
-
-    <!--<div class="d-flex flex-column align-items-center">
-        <div class="d-flex flex-column w-50">
+    <div class="d-flex flex-column align-items-start">
+        <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}"></div>
+        <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
+        <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
+        <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
+    </div>
+    <div class="d-flex flex-column align-items-center flex-shrink-1">
+        <div class="flex-grow-1">
             <h2>Teilnehmer</h2>
             <table class="table table-light ">
                 <thead>
-                <th>Name</th>
+                <th th:text="${#sets.size(event.teilnehmer)}">Name</th>
                 <th>Alter</th>
                 <th>Angekommen</th>
                 <th>Anwesend</th>
+                <th>Bearbeiten</th>
                 </thead>
                 <tbody>
-                <tr th:each="teilnehmer : ${event.getTeilnehmer()}">
+                <tr th:each="teilnehmer : ${event.teilnehmer}">
                     <td th:text="${teilnehmer.anmeldung.vorname} + ' ' + ${teilnehmer.anmeldung.nachname}"></td>
+                    <td th:text="${teilnehmer.alter}"></td>
                     <td th:text="${teilnehmer.angekommen}"></td>
-                    <td th:text="${anmeldung.anwesend}"></td>
-                    <td th:text="${}"></td>
+                    <td th:text="${teilnehmer.anwesend}"></td>
                     <td>
-                        <form class="text-center" method="post" th:action="@{/teilnehmer/{anmeldungId}(anmeldungId=anmeldung.id)}" th:object="${teilnehmer}">
-                            <input hidden th:field="*{anmeldung}" th:value="${anmeldung}">
-                            <button class="btn btn-primary" type="submit"><i class="bi bi-arrow-right-circle-fill"></i></button>
-                        </form>
+                        <a class="btn btn-primary fs-6" th:href="@{teilnehmer/{id}(id=teilnehmer.id)}" type="submit"><i class="bi bi-arrow-right-circle"></i></a>
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
-    </div>-->
-
-    <div class="d-flex flex-column align-items-center">
-        <div class="d-flex flex-column w-50">
+        <div class="flex-grow-1">
             <h2>Anmeldungen</h2>
             <table class="table table-light ">
                 <thead>
@@ -65,8 +61,12 @@
                     <td th:text="${anmeldung.geburtstag}"></td>
                     <td th:text="${anmeldung.nummerNotfallkontakt}"></td>
                     <td>
-                        <form class="text-center" method="post" th:action="@{/teilnehmer/{anmeldungId}(anmeldungId=${anmeldung.id})}" th:object="${teilnehmer}">
+                        <form class="text-center"
+                              method="post"
+                              th:action="@{/teilnehmer/{anmeldungId}(anmeldungId=${anmeldung.id})}"
+                              th:object="${teilnehmer}">
                             <input hidden th:field="*{anmeldung}" th:value="${anmeldung}">
+                            <p th:text="*{anwesend}"></p>
                             <button class="btn btn-primary" type="submit"><i class="bi bi-arrow-right-circle-fill"></i></button>
                         </form>
                     </td>

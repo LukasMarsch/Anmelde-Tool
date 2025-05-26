@@ -12,7 +12,6 @@ import org.jufe.anmeldetool.service.EventService;
 import org.jufe.anmeldetool.service.MailService;
 import org.jufe.message.MessageStore;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -54,7 +53,6 @@ public class AnmeldungController {
     }
 
     @PostMapping
-    @Transactional
     public ModelAndView postForm(@ModelAttribute(name = ENTITY_ANMELDUNG) Anmeldung anmeldung, Model model) {
         LOGGER.trace(() -> String.format("save %s from model as %s", ENTITY_ANMELDUNG, anmeldung));
         MessageStore messages = new MessageStore();
@@ -78,6 +76,7 @@ public class AnmeldungController {
         }
         // todo: auf anreise weiterleiten
         messages.put(ENTITY_ANMELDUNG, anmeldung);
+        model.addAttribute(ENTITY_EVENT, eventService.getNextEvent());
         return new ModelAndView(VIEW_ANMELDE_FORMULAR, messages);
     }
 
