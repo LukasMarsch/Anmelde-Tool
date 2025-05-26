@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.jufe.address.PostAdresse;
 import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.entschuldigung.Entschuldigung;
@@ -34,8 +35,10 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     private InternetAddress mail;
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "anmeldung", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.EAGER, optional = true, mappedBy = "anmeldung", orphanRemoval = true, cascade = CascadeType.PERSIST)
     @Nullable
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Teilnehmer teilnehmer;
 
     private PostAdresse adresse;
@@ -76,6 +79,11 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     public Anmeldung(Event event) {
         this.event = event;
+    }
+
+    @Nullable
+    public Teilnehmer getTeilnehmer() {
+        return this.teilnehmer;
     }
 
     public void addEssen(Essen essen) {

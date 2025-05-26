@@ -15,11 +15,12 @@ import java.util.Objects;
 public class Teilnehmer extends BaseEntity implements Serializable {
 
     @OneToOne(orphanRemoval = false, optional = false, fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
     private Anmeldung anmeldung;
 
-    private boolean angekommen;
+    private Boolean angekommen;
 
-    private boolean anwesend;
+    private Boolean anwesend;
 
     private boolean bestaetigungVersendet;
 
