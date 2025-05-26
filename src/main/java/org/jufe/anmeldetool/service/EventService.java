@@ -1,5 +1,7 @@
 package org.jufe.anmeldetool.service;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.jufe.address.PostAdresse;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.entity.reise.Halt;
@@ -14,6 +16,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.*;
 
+@Getter
+@RequiredArgsConstructor
 @Service
 public class EventService extends BaseService<Event> {
 

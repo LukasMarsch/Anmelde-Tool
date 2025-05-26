@@ -54,6 +54,8 @@ public class EventController {
             return REDIRECT_EVENT;
         }
         model.addAttribute(ENTITY_EVENT, e.get());
+        LOGGER.debug(e.get()
+                      .getTeilnehmer());
         return VIEW_EVENT_DETAIL;
     }
 

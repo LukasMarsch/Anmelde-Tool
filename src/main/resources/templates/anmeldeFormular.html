@@ -3,19 +3,19 @@
 <head>
     <title>Anmeldung JuFe</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/css/anmeldung.css}">
-    <th:block th:replace="fragments/footer.html :: head"></th:block>
+    <th:block th:replace="~{fragments/footer.html :: head}"></th:block>
 </head>
 <body>
-
+<div th:replace="~{fragments/message :: #message}"></div>
 <div class="content py-4">
-    <form class="d-flex flex-column align-items-center" action="#" th:action="@{/anmeldung}" th:object="${anmeldung}" method="post">
+    <form action="#" class="d-flex flex-column align-items-center" method="post" th:action="@{/anmeldung}" th:object="${anmeldung}">
         <h2 th:text="'Anmeldung ' + ${anmeldung.event.name}"></h2>
-        <input type="" th:field="*{event}" th:value="${anmeldung.event.id}" hidden>
+        <input hidden th:field="*{event}" th:value="${anmeldung.event.id}" type="">
         <div class=" flex-shrink-1">
             <!--                    <div class="d-lg-flex">-->
             <div class="card p-4 mb-4 flex-grow-1">
@@ -23,17 +23,17 @@
                 <div class="card-body">
                     <div class="form-group pt-1">
                         <label for="vorname">Vorname</label>
-                        <input type="text" class="form-control" id="vorname" th:field="*{vorname}" required>
+                        <input class="form-control" id="vorname" required th:field="*{vorname}" type="text">
                     </div>
 
                     <div class="form-group pt-1">
                         <label for="nachname">Nachname</label>
-                        <input type="text" class="form-control" id="nachname" th:field="*{nachname}" required>
+                        <input class="form-control" id="nachname" required th:field="*{nachname}" type="text">
                     </div>
 
                     <div class="form-group pt-1">
                         <label for="email">E-Mail Adresse</label>
-                        <input type="email" class="form-control" id="email" th:field="*{mail}" required>
+                        <input class="form-control" id="email" required th:field="*{mail}" type="email">
                     </div>
                 </div>
             </div>
@@ -43,21 +43,21 @@
                 <div class="card-body">
                     <div class="form-group pt-1">
                         <label for="strasse">Straße</label>
-                        <input type="text" class="form-control" id="strasse" th:field="*{adresse.strasse}" required>
+                        <input class="form-control" id="strasse" required th:field="*{adresse.strasse}" type="text">
                     </div>
                     <div class="form-group pt-1">
                         <label for="hausnummer">Hausnummer</label>
-                        <input type="text" class="form-control" id="hausnummer" th:field="*{adresse.hausnummer}" required>
+                        <input class="form-control" id="hausnummer" required th:field="*{adresse.hausnummer}" type="text">
                     </div>
 
                     <div class="form-group pt-1">
                         <label for="plz">PLZ</label>
-                        <input type="text" class="form-control" id="plz" th:field="*{adresse.plz}" required>
+                        <input class="form-control" id="plz" required th:field="*{adresse.plz}" type="text">
                     </div>
 
                     <div class="form-group pt-1">
                         <label for="stadt">Stadt</label>
-                        <input type="text" class="form-control" id="stadt" th:field="*{adresse.stadt}" required>
+                        <input class="form-control" id="stadt" required th:field="*{adresse.stadt}" type="text">
                     </div>
 
                 </div>
@@ -69,17 +69,17 @@
                 <div class="card-body">
                     <div class="form-group pt-1">
                         <label for="kirchenbezirk">Kirchenbezirk</label>
-                        <select class="form-control" id="kirchenbezirk" th:field="*{bezirk}" required>
+                        <select class="form-control" id="kirchenbezirk" required th:field="*{bezirk}">
                             <option disabled value="">Bitte Auswählen</option>
                             <option th:each="kirchenbezirkOption : ${T(org.jufe.anmeldetool.entity.anmeldung.Kirchenbezirk).values()}"
-                                    th:value="${kirchenbezirkOption}"
-                                    th:text="${kirchenbezirkOption.displayValue}">
+                                    th:text="${kirchenbezirkOption.displayValue}"
+                                    th:value="${kirchenbezirkOption}">
                             </option>
                         </select>
                     </div>
                     <div class="form-group pt-1">
                         <label for="gemeinde">Gemeinde</label>
-                        <input type="text" class="form-control" id="gemeinde" th:field="*{gemeinde}">
+                        <input class="form-control" id="gemeinde" th:field="*{gemeinde}" type="text">
                     </div>
                 </div>
             </div>
@@ -88,14 +88,14 @@
                 <div class="card-body">
                     <div class="form-group pt-1">
                         <label for="geburtstag">Geburtstag</label>
-                        <input type="date" class="form-control" id="geburtstag" th:field="*{geburtstag}" required>
+                        <input class="form-control" id="geburtstag" required th:field="*{geburtstag}" type="date">
                     </div>
                     <div class="form-group pt-1">
                         <label for="geschlecht">Geschlecht</label>
-                        <select class="form-control" id="geschlecht" th:field="*{geschlecht}" required>
+                        <select class="form-control" id="geschlecht" required th:field="*{geschlecht}">
                             <option th:each="geschlechtOption : ${T(org.jufe.anmeldetool.entity.anmeldung.Geschlecht).values()}"
-                                    th:value="${geschlechtOption}"
-                                    th:text="${geschlechtOption.displayValue}">
+                                    th:text="${geschlechtOption.displayValue}"
+                                    th:value="${geschlechtOption}">
                             </option>
                         </select>
                     </div>
@@ -108,20 +108,20 @@
                 <div class="card-body">
                     <div class="form-group pt-1">
                         <label for="isst">Du Isst</label>
-                        <select class="form-control" id="isst" th:field="*{isst}" required>
+                        <select class="form-control" id="isst" required th:field="*{isst}">
                             <option th:each="essOption : ${T(org.jufe.anmeldetool.entity.anmeldung.Isst).values()}"
-                                    th:value="${essOption}"
-                                    th:text="${essOption.displayValue}">
+                                    th:text="${essOption.displayValue}"
+                                    th:value="${essOption}">
                             </option>
                         </select>
                     </div>
                     <div class="form-check form-group pt-1">
-                        <input type="checkbox" class="form-check-input" id="schwimmer" th:field="*{schwimmer}">
+                        <input class="form-check-input" id="schwimmer" th:field="*{schwimmer}" type="checkbox">
                         <label class="form-check-label" for="schwimmer">Schwimmer</label>
                     </div>
                     <div class="form-group">
                         <label for="anmerkung">Anmerkung</label>
-                        <input type="text" class="form-control" id="anmerkung" th:field="*{anmerkung}">
+                        <input class="form-control" id="anmerkung" th:field="*{anmerkung}" type="text">
                     </div>
                 </div>
             </div>
@@ -130,27 +130,27 @@
                 <div class="card-body">
                     <div class="form-group" id="evk-div">
                         <label for="evk">Einverständnis-Erklärung (PDF)</label>
-                        <input type="file" class="form-control" id="evk" accept=".pdf,.png" th:field="*{einverstaendnisErklaerung}">
+                        <input accept=".pdf,.png" class="form-control" id="evk" th:field="*{einverstaendnisErklaerung}" type="file">
                     </div>
 
                     <div class="form-group">
                         <label for="notfallkontakt">Name Notfallkontakt</label>
-                        <input type="text" class="form-control" id="notfallkontakt" th:field="*{nameNotfallkontakt}">
+                        <input class="form-control" id="notfallkontakt" th:field="*{nameNotfallkontakt}" type="text">
                     </div>
 
                     <div class="form-group">
                         <label for="nummerNotfallkontakt">Notfallkontakt Nummer</label>
-                        <input type="tel" class="form-control" id="nummerNotfallkontakt" th:field="*{nummerNotfallkontakt}">
+                        <input class="form-control" id="nummerNotfallkontakt" th:field="*{nummerNotfallkontakt}" type="tel">
                     </div>
                 </div>
             </div>
             <!--                    </div>-->
-            <button type="submit" class="btn btn-primary">Anmelden</button>
+            <button class="btn btn-primary" type="submit">Anmelden</button>
         </div>
     </form>
 </div>
 
-<div th:replace="fragments/footer.html :: footer"></div>
+<div th:replace="~{fragments/footer.html :: footer}"></div>
 
 <!-- Bootstrap JS libraries -->
 <script th:src="@{/webjars/jquery/3.7.1/jquery.slim.min.js}"></script>
