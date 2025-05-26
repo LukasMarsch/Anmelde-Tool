@@ -4,13 +4,15 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.service.EventService;
+import org.jufe.message.MessageStore;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,11 +32,6 @@ public class EventController {
         return new Event();
     }
 
-    @ModelAttribute(name = ENTITY_TEILNEHMER)
-    public Teilnehmer setUpTNForm() {
-        return new Teilnehmer();
-    }
-
     @GetMapping
     public String getListForm(Model model, HttpSession session) {
         model.addAttribute(ENTITY_EVENT_LISTE, eventService.getAllEvents());
@@ -48,15 +45,16 @@ public class EventController {
     }
 
     @GetMapping("/{id}")
-    public String getIdForm(@PathVariable("id") UUID id, Model model, HttpSession session) {
+    public ModelAndView getIdForm(@PathVariable("id") UUID id, HttpSession session) {
         Optional<Event> e = eventService.getEventById(id);
+        var model = new MessageStore();
         if (e.isEmpty()) {
-            return REDIRECT_EVENT;
+            return new ModelAndView(REDIRECT_EVENT, new HashMap<>());
         }
-        model.addAttribute(ENTITY_EVENT, e.get());
+        model.put(ENTITY_EVENT, e.get());
         LOGGER.debug(e.get()
-                      .getTeilnehmer());
-        return VIEW_EVENT_DETAIL;
+                      .getBestaetigt());
+        return new ModelAndView(VIEW_EVENT_DETAIL, model);
     }
 
 }

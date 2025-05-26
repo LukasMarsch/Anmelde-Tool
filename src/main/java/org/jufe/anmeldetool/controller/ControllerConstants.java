@@ -26,6 +26,8 @@ public final class ControllerConstants {
 
     public static final String REDIRECT_EVENT = "redirect:/event";
 
+    public static final String REDIRECT_EVENTDETAIL = "redirect:/event/%s";
+
     public static final String EVENT_FORMULAR = "eventFormular";
 
     public static final String VIEW_EVENT_DETAIL = "admin/eventDetail";

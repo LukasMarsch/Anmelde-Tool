@@ -4,13 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
-import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 import org.jufe.anmeldetool.entity.reise.Shuttle;
 import org.jufe.anmeldetool.wrapper.TeilnehmerStatistik;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.Comparator;
 import java.util.Set;
 
 @Getter
@@ -47,19 +46,15 @@ public class Event extends BaseEntity implements Serializable {
     @OrderBy("name")
     private Set<Benutzer> organisatoren;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
     @OrderBy("nachname, vorname")
     private Set<Anmeldung> anmeldungen;
-
-    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
-    @OrderBy("id")
-    private Set<Teilnehmer> teilnehmer;
 
     @OneToMany(mappedBy = "event")
     @OrderBy("id")
     private Set<Shuttle> shuttles;
 
-    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "event")
     @OrderBy("bis")
     private Set<Tarif> tarif;
 
@@ -90,14 +85,16 @@ public class Event extends BaseEntity implements Serializable {
         this.shuttles.remove(shuttle);
     }
 
-    public Set<Teilnehmer> getTeilnehmer() {
-        if (this.teilnehmer == null)
-            this.teilnehmer = new HashSet<>();
-        return this.teilnehmer;
-    }
-
     public void berechneTeilnehmerStatistik() {
         statistik = TeilnehmerStatistik.berechne(anmeldungen);
+    }
+
+    public Iterable<Anmeldung> getBestaetigt() {
+        var t = new java.util.ArrayList<>(this.anmeldungen.stream()
+                                                          .filter(a -> a.isBestaetigt())
+                                                          .toList());
+        t.sort(Comparator.comparing(Anmeldung::getNachname));
+        return t;
     }
 
 }

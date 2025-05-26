@@ -4,11 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
-import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 
 import java.io.Serializable;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Getter
@@ -29,20 +27,14 @@ public class TeilnehmerStatistik implements Serializable {
 
     public static TeilnehmerStatistik berechne(Set<Anmeldung> anmeldungen) {
         int[] stats = new int[] {0, 0, 0, 0, 0, 0}; // repräsentiert die sechs Metriken
-        anmeldungen = anmeldungen.stream()
-                                 .filter(a -> a.getTeilnehmer() != null)
-                                 .collect(Collectors.toUnmodifiableSet());
-        stats[0] = anmeldungen.size(); // Alle Anmeldungen
-
-        Teilnehmer teilnehmer;
         for (Anmeldung anmeldung : anmeldungen) {
-            teilnehmer = anmeldung.getTeilnehmer();
-            if (teilnehmer == null || teilnehmer.getAngekommen() == null || teilnehmer.getAnwesend() == null)
-                continue;
-            stats[1]++; // Anmeldung durch Bezahlung bestätigt -> Teilnehmer
-            if (teilnehmer.getAngekommen()) {
+            stats[0]++;
+            if (anmeldung.isBestaetigt())
+                stats[1]++; // Anmeldung durch Bezahlung bestätigt -> Teilnehmer
+
+            if (anmeldung.isAngekommen()) {
                 stats[3]++; // Teilnehmer auf Grundstück angekommen
-                if (teilnehmer.getAnwesend())
+                if (anmeldung.isAnwesend())
                     stats[4]++; // Teilnehmer MOMENTAN auf Grundstück
             }
 

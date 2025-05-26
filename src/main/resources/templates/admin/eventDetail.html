@@ -23,22 +23,22 @@
     <div class="d-flex flex-column align-items-center flex-shrink-1">
         <div class="flex-grow-1">
             <h2>Teilnehmer</h2>
-            <table class="table table-light ">
+            <table class="table table-light">
                 <thead>
-                <th th:text="${#sets.size(event.teilnehmer)}">Name</th>
+                <th th:text="${#sets.size(event.getBestaetigt)}">Name</th>
                 <th>Alter</th>
                 <th>Angekommen</th>
                 <th>Anwesend</th>
                 <th>Bearbeiten</th>
                 </thead>
                 <tbody>
-                <tr th:each="teilnehmer : ${event.teilnehmer}">
-                    <td th:text="${teilnehmer.anmeldung.vorname} + ' ' + ${teilnehmer.anmeldung.nachname}"></td>
-                    <td th:text="${teilnehmer.alter}"></td>
-                    <td th:text="${teilnehmer.angekommen}"></td>
-                    <td th:text="${teilnehmer.anwesend}"></td>
+                <tr th:each="bestaetigteAnmeldung : ${event.getBestaetigt()}">
+                    <td th:text="${bestaetigteAnmeldung.vorname} + ' ' + ${bestaetigteAnmeldung.nachname}"></td>
+                    <td th:text="${bestaetigteAnmeldung.alter()}"></td>
+                    <td th:text="${bestaetigteAnmeldung.angekommen}"></td>
+                    <td th:text="${bestaetigteAnmeldung.anwesend}"></td>
                     <td>
-                        <a class="btn btn-primary fs-6" th:href="@{teilnehmer/{id}(id=teilnehmer.id)}" type="submit"><i class="bi bi-arrow-right-circle"></i></a>
+                        <a class="btn btn-primary fs-6" th:href="@{bestaetigen/{id}(id=bestaetigteAnmeldung.id)}" type="submit"><i class="bi bi-arrow-right-circle"></i></a>
                     </td>
                 </tr>
                 </tbody>
@@ -63,10 +63,7 @@
                     <td>
                         <form class="text-center"
                               method="post"
-                              th:action="@{/teilnehmer/{anmeldungId}(anmeldungId=${anmeldung.id})}"
-                              th:object="${teilnehmer}">
-                            <input hidden th:field="*{anmeldung}" th:value="${anmeldung}">
-                            <p th:text="*{anwesend}"></p>
+                              th:action="@{/bestaetigen/{anmeldungId}(anmeldungId=${anmeldung.id})}">
                             <button class="btn btn-primary" type="submit"><i class="bi bi-arrow-right-circle-fill"></i></button>
                         </form>
                     </td>
