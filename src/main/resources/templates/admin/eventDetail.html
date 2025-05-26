@@ -7,45 +7,48 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/event.css}">
     <th:block th:replace="~{fragments/footer.html :: head}"></th:block>
 </head>
 <body>
 
-<div class="content py-4">
+<div class="d-flex flex-column align-items-center">
     <h2 th:text="${event.name}"></h2>
-
-    <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}"></div>
-    <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
-    <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
-    <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
-
-    <div class="d-flex flex-column align-items-center">
-        <div class="d-flex flex-column w-50">
-            <h2>Anmeldungen</h2>
-            <table class="table table-light ">
-                <thead>
-                <th>Name</th>
-                <th>E-Mail</th>
-                <th>Geburtstag</th>
-                <th>Notfall Nummer</th>
-                <th class="text-center">Bestätigen</th>
-                </thead>
-                <tbody>
-                <tr th:each="anmeldung : ${event.anmeldungen}">
-                    <td th:text="${anmeldung.vorname} + ' ' + ${anmeldung.nachname}"></td>
-                    <td th:text="${anmeldung.mail}"></td>
-                    <td th:text="${anmeldung.geburtstag}"></td>
-                    <td th:text="${anmeldung.nummerNotfallkontakt}"></td>
-                    <td>
-                        <form class="text-center" method="post" th:action="@{/teilnehmer}" th:object="${teilnehmer}">
-                            <input hidden th:field="*{anmeldung}" th:value="${anmeldung}">
-                            <button class="btn btn-primary" type="submit"><i class="bi bi-arrow-right-circle-fill"></i></button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+    <div class="grid-container">
+        <div class="date" th:text="'von: ' + ${#temporals.format(event.von, 'dd.MM.yyyy')}"></div>
+        <div class="date" th:text="'bis: ' + ${#temporals.format(event.bis, 'dd.MM.yyyy')}"></div>
+        <div class="flex-container">
+            <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}"></div>
+            <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
+            <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
+            <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
         </div>
+    </div>
+    <h2>Anmeldungen</h2>
+    <div class="anmeldungsliste">
+        <table class="table table-light anmeldungsliste-element">
+            <thead>
+            <th>Name</th>
+            <th>E-Mail</th>
+            <th>Alter</th>
+            <th>Notfall Nummer</th>
+            <th class="text-center">Bestätigen</th>
+            </thead>
+            <tbody>
+            <tr th:each="anmeldung : ${event.anmeldungen}">
+                <td th:text="${anmeldung.vorname} + ' ' + ${anmeldung.nachname}"></td>
+                <td th:text="${anmeldung.mail}"></td>
+                <td th:text="${anmeldung.alter()}"></td>
+                <td th:text="${anmeldung.nummerNotfallkontakt}"></td>
+                <td>
+                    <form class="text-center" method="post" th:action="@{/teilnehmer}" th:object="${teilnehmer}">
+                        <input hidden th:field="*{anmeldung}" th:value="${anmeldung}">
+                        <button class="btn btn-primary" type="submit"><i class="bi bi-arrow-right-circle-fill"></i></button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 

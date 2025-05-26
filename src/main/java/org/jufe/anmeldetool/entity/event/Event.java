@@ -75,7 +75,9 @@ public class Event extends BaseEntity implements Serializable {
     public void removeShuttle(Shuttle shuttle) {
         this.shuttles.remove(shuttle);
     }
+
     public void berechneTeilnehmerStatistik() {
         statistik = TeilnehmerStatistik.berechne(anmeldungen);
     }
+
 }

@@ -1,0 +1,22 @@
+body::before {
+    content: "";
+    position: absolute; /* oder relative, je nach Bedarf */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.4;
+    background-image: url("gruppenbild.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+body {
+    position: relative;
+}
+
+footer {
+    background-color: white;
+}

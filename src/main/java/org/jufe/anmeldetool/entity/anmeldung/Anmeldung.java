@@ -16,6 +16,7 @@ import org.springframework.lang.Nullable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
 import java.util.Set;
 
@@ -109,6 +110,22 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     public void setNimmtShuttleVon(@NonNull Halt nimmtShuttleVon) {
         this.nimmtShuttleVon = nimmtShuttleVon;
+    }
+
+    public Alter alter() throws IllegalArgumentException {
+        Period alter = geburtstag.until(event.getVon());
+        if (alter.isNegative()) {
+            throw new IllegalArgumentException("Alter kann nicht negativ sein");
+        }
+
+        if (alter.getYears() >= 18) {
+            return Alter.O18;
+        } else if (alter.getYears() >= 16) {
+            return Alter.U18;
+        } else if (alter.getYears() >= 0) {
+            return Alter.U16;
+        }
+        throw new IllegalArgumentException("Alter muss erreichbar sein.");
     }
 
 }

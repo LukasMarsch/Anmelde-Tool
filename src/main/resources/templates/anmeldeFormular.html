@@ -7,13 +7,14 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/anmeldung.css}">
     <th:block th:replace="fragments/footer.html :: head"></th:block>
 </head>
 <body>
 
 <div class="content py-4">
-    <h2 th:text="'Anmeldung ' + ${anmeldung.event.name}"></h2>
     <form class="d-flex flex-column align-items-center" action="#" th:action="@{/anmeldung}" th:object="${anmeldung}" method="post">
+        <h2 th:text="'Anmeldung ' + ${anmeldung.event.name}"></h2>
         <input type="" th:field="*{event}" th:value="${anmeldung.event.id}" hidden>
         <div class=" flex-shrink-1">
             <!--                    <div class="d-lg-flex">-->
