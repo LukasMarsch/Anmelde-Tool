@@ -1,16 +1,15 @@
 package org.jufe.anmeldetool.service;
 
-import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.jufe.anmeldetool.repository.anmeldung.AnmeldungRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+@Getter
+@RequiredArgsConstructor
 @Service
-public class AnmeldungService extends BaseService<Anmeldung> {
+public class AnmeldungService {
 
-    @Autowired
-    public AnmeldungService(AnmeldungRepository repo) {
-        super(repo);
-    }
+    private final AnmeldungRepository anmeldungRepository;
 
 }

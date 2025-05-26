@@ -7,8 +7,8 @@ import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
 import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 
 import java.io.Serializable;
-import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Getter
@@ -29,19 +29,20 @@ public class TeilnehmerStatistik implements Serializable {
 
     public static TeilnehmerStatistik berechne(Set<Anmeldung> anmeldungen) {
         int[] stats = new int[] {0, 0, 0, 0, 0, 0}; // repräsentiert die sechs Metriken
+        anmeldungen = anmeldungen.stream()
+                                 .filter(a -> a.getTeilnehmer() != null)
+                                 .collect(Collectors.toUnmodifiableSet());
         stats[0] = anmeldungen.size(); // Alle Anmeldungen
 
-        Optional<Teilnehmer> teilnehmer;
+        Teilnehmer teilnehmer;
         for (Anmeldung anmeldung : anmeldungen) {
             teilnehmer = anmeldung.getTeilnehmer();
-            if (teilnehmer.isEmpty())
+            if (teilnehmer == null || teilnehmer.getAngekommen() == null || teilnehmer.getAnwesend() == null)
                 continue;
             stats[1]++; // Anmeldung durch Bezahlung bestätigt -> Teilnehmer
-            if (teilnehmer.get()
-                          .getAngekommen()) {
+            if (teilnehmer.getAngekommen()) {
                 stats[3]++; // Teilnehmer auf Grundstück angekommen
-                if (teilnehmer.get()
-                              .isAnwesend())
+                if (teilnehmer.getAnwesend())
                     stats[4]++; // Teilnehmer MOMENTAN auf Grundstück
             }
 

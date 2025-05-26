@@ -1,8 +1,9 @@
 package org.jufe.anmeldetool.service;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.repository.event.EventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -12,16 +13,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Getter
+@RequiredArgsConstructor
 @Service
-public class EventService extends BaseService<Event> {
+public class EventService {
 
     private final EventRepository repository;
-
-    @Autowired
-    public EventService(EventRepository repository) {
-        super(repository);
-        this.repository = repository;
-    }
 
     @Cacheable
     public Event getNextEvent() {
@@ -38,7 +35,7 @@ public class EventService extends BaseService<Event> {
                        .von(LocalDate.of(2018, 1, 1))
                        .bis(LocalDate.of(2018, 1, 3))
                        .build();
-        repo.save(e);
+        repository.save(e);
         return e;
     }
 

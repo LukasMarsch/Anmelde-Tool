@@ -1,0 +1,16 @@
+<!doctype html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
+</head>
+<body>
+<div aria-atomic="true" aria-live="assertive" id="message" role="alert" th:class="${success ? 'toast align-items-center text-bg-success border-0' : 'toast align-items-center text-bg-danger border-0'}" th:unless="${message == null}">
+    <div class="d-flex">
+        <div class="toast-body" th:text="${message}">
+            Hello, world! This is a toast message.
+        </div>
+        <button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button"></button>
+    </div>
+</div>
+</body>
+</html>

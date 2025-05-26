@@ -3,25 +3,81 @@
 <head>
     <title>Event</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.5/css/bootstrap.min.css}">
-    <th:block th:replace="fragments/footer.html :: head"></th:block>
+    <th:block th:replace="~{fragments/footer.html :: head}"></th:block>
 </head>
 <body>
 
 <div class="content py-4">
     <h2 th:text="${event.name}"></h2>
 
-    <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}"></div>
-    <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
-    <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
-    <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
-
+    <div class="d-flex flex-column align-items-start">
+        <div class="metric" id="m1" th:text="'Teilnehmer: ' + ${event.statistik.teilnehmer}"></div>
+        <div class="metric" id="m2" th:text="'Erwartet: ' + ${event.statistik.erwartet}"></div>
+        <div class="metric" id="m3" th:text="'Anwesend: ' + ${event.statistik.anwesend}"></div>
+        <div class="metric" id="m4" th:text="'Abwesend: ' + ${event.statistik.abwesend}"></div>
+    </div>
+    <div class="d-flex flex-column align-items-center flex-shrink-1">
+        <div class="flex-grow-1">
+            <h2>Teilnehmer</h2>
+            <table class="table table-light ">
+                <thead>
+                <th th:text="${#sets.size(event.teilnehmer)}">Name</th>
+                <th>Alter</th>
+                <th>Angekommen</th>
+                <th>Anwesend</th>
+                <th>Bearbeiten</th>
+                </thead>
+                <tbody>
+                <tr th:each="teilnehmer : ${event.teilnehmer}">
+                    <td th:text="${teilnehmer.anmeldung.vorname} + ' ' + ${teilnehmer.anmeldung.nachname}"></td>
+                    <td th:text="${teilnehmer.alter}"></td>
+                    <td th:text="${teilnehmer.angekommen}"></td>
+                    <td th:text="${teilnehmer.anwesend}"></td>
+                    <td>
+                        <a class="btn btn-primary fs-6" th:href="@{teilnehmer/{id}(id=teilnehmer.id)}" type="submit"><i class="bi bi-arrow-right-circle"></i></a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="flex-grow-1">
+            <h2>Anmeldungen</h2>
+            <table class="table table-light ">
+                <thead>
+                <th>Name</th>
+                <th>E-Mail</th>
+                <th>Geburtstag</th>
+                <th>Notfall Nummer</th>
+                <th class="text-center">Bestätigen</th>
+                </thead>
+                <tbody>
+                <tr th:each="anmeldung : ${event.anmeldungen}">
+                    <td th:text="${anmeldung.vorname} + ' ' + ${anmeldung.nachname}"></td>
+                    <td th:text="${anmeldung.mail}"></td>
+                    <td th:text="${anmeldung.geburtstag}"></td>
+                    <td th:text="${anmeldung.nummerNotfallkontakt}"></td>
+                    <td>
+                        <form class="text-center"
+                              method="post"
+                              th:action="@{/teilnehmer/{anmeldungId}(anmeldungId=${anmeldung.id})}"
+                              th:object="${teilnehmer}">
+                            <input hidden th:field="*{anmeldung}" th:value="${anmeldung}">
+                            <p th:text="*{anwesend}"></p>
+                            <button class="btn btn-primary" type="submit"><i class="bi bi-arrow-right-circle-fill"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
-<div th:replace="fragments/footer.html :: footer"></div>
+<div th:replace="~{fragments/footer.html :: footer}"></div>
 
 <!-- Bootstrap JS libraries -->
 <script th:src="@{/webjars/jquery/3.7.1/jquery.slim.min.js}"></script>

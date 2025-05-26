@@ -4,18 +4,20 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
+import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 import org.jufe.anmeldetool.entity.reise.Shuttle;
 import org.jufe.anmeldetool.wrapper.TeilnehmerStatistik;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity()
+@Entity
 @Table(name = "EVENTTABLE")
 @Builder
 public class Event extends BaseEntity implements Serializable {
@@ -26,11 +28,15 @@ public class Event extends BaseEntity implements Serializable {
 
     private LocalDate bis;
 
-    @ManyToOne
-    private Essen erstesEssen;
+    @Enumerated(EnumType.STRING)
+    private Mahlzeit erstesMahlzeit;
 
-    @ManyToOne
-    private Essen letztesEssen;
+    @Enumerated(EnumType.STRING)
+    private Mahlzeit letzteMahlzeit;
+
+    @OneToMany(mappedBy = "event")
+    @OrderBy("tag, mahlzeit")
+    private Set<Essen> essen;
 
     private boolean mitKaffee;
 
@@ -38,15 +44,23 @@ public class Event extends BaseEntity implements Serializable {
     private Benutzer creator;
 
     @ManyToMany
+    @OrderBy("name")
     private Set<Benutzer> organisatoren;
 
     @OneToMany(mappedBy = "event")
+    @OrderBy("nachname, vorname")
     private Set<Anmeldung> anmeldungen;
 
-    @OneToMany(mappedBy = "event")
-    private Set<Shuttle> shuttles;
+    @OneToMany(mappedBy = "event", fetch = FetchType.EAGER)
+    @OrderBy("id")
+    private Set<Teilnehmer> teilnehmer;
 
     @OneToMany(mappedBy = "event")
+    @OrderBy("id")
+    private Set<Shuttle> shuttles;
+
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY)
+    @OrderBy("bis")
     private Set<Tarif> tarif;
 
     @Transient
@@ -75,7 +89,15 @@ public class Event extends BaseEntity implements Serializable {
     public void removeShuttle(Shuttle shuttle) {
         this.shuttles.remove(shuttle);
     }
+
+    public Set<Teilnehmer> getTeilnehmer() {
+        if (this.teilnehmer == null)
+            this.teilnehmer = new HashSet<>();
+        return this.teilnehmer;
+    }
+
     public void berechneTeilnehmerStatistik() {
         statistik = TeilnehmerStatistik.berechne(anmeldungen);
     }
+
 }

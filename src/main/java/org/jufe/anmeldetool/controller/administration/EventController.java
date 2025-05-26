@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jufe.anmeldetool.entity.anmeldung.Teilnehmer;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.service.EventService;
 import org.springframework.stereotype.Controller;
@@ -29,6 +30,11 @@ public class EventController {
         return new Event();
     }
 
+    @ModelAttribute(name = ENTITY_TEILNEHMER)
+    public Teilnehmer setUpTNForm() {
+        return new Teilnehmer();
+    }
+
     @GetMapping
     public String getListForm(Model model, HttpSession session) {
         model.addAttribute(ENTITY_EVENT_LISTE, eventService.getAllEvents());
@@ -48,6 +54,8 @@ public class EventController {
             return REDIRECT_EVENT;
         }
         model.addAttribute(ENTITY_EVENT, e.get());
+        LOGGER.debug(e.get()
+                      .getTeilnehmer());
         return VIEW_EVENT_DETAIL;
     }
 

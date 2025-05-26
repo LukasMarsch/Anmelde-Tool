@@ -1,30 +1,31 @@
 package org.jufe.anmeldetool.entity.anmeldung;
 
-import io.micrometer.common.lang.NonNull;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import org.jufe.address.PostAdresse;
 import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.entschuldigung.Entschuldigung;
 import org.jufe.anmeldetool.entity.event.Essen;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.entity.reise.Halt;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Optional;
 import java.util.Set;
 
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @Data
 @Entity
 public class Anmeldung extends BaseEntity implements Serializable {
 
-    @ManyToOne
-    @org.springframework.lang.NonNull
+    @ManyToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+    @NonNull
     private Event event;
 
     private String vorname;
@@ -33,8 +34,10 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     private InternetAddress mail;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER, optional = true, orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "teilnehmer_id", referencedColumnName = "id")
     @Nullable
+    @EqualsAndHashCode.Exclude
     private Teilnehmer teilnehmer;
 
     private PostAdresse adresse;
@@ -76,45 +79,13 @@ public class Anmeldung extends BaseEntity implements Serializable {
     public Anmeldung(Event event) {
         this.event = event;
     }
-
+    
     public void addEssen(Essen essen) {
         anwesend.add(essen);
     }
 
     public void removeEssen(Essen essen) {
         anwesend.remove(essen);
-    }
-
-    public void setTeilnehmer(Optional<Teilnehmer> teilnehmer) {
-        if (teilnehmer.isPresent()) this.teilnehmer = teilnehmer.get();
-    }
-
-    public Optional<Teilnehmer> getTeilnehmer() {
-        return Optional.ofNullable(teilnehmer);
-    }
-
-    public Optional<byte[]> getEinverstaendnisErklaerung() {
-        return null != einverstaendnisErklaerung ? Optional.of(einverstaendnisErklaerung) : Optional.empty();
-    }
-
-    protected void setEinverstaendnisErklaerung(byte[] einverstaendnisErklaerung) {
-        this.einverstaendnisErklaerung = einverstaendnisErklaerung;
-    }
-
-    public void setEinverstaendnisErklaerung(Optional<byte[]> einverstaendnisErklaerung) {
-        einverstaendnisErklaerung.ifPresent(this::setEinverstaendnisErklaerung);
-    }
-
-    public Optional<Halt> getNimmtShuttleVon() {
-        return this.nimmtShuttleVon != null ? Optional.of(this.nimmtShuttleVon) : Optional.empty();
-    }
-
-    public void setNimmtShuttleVon(@NonNull Optional<Halt> nimmtShuttleVon) throws NullPointerException {
-        nimmtShuttleVon.ifPresent(this::setNimmtShuttleVon);
-    }
-
-    public void setNimmtShuttleVon(@NonNull Halt nimmtShuttleVon) {
-        this.nimmtShuttleVon = nimmtShuttleVon;
     }
 
 }
