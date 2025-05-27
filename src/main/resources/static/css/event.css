@@ -47,3 +47,13 @@
 #m4 {
     color: orange;
 }
+
+.anmeldungsliste {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto 3fr auto;
+}
+
+.anmeldungsliste-element {
+    grid-column: 2 / 3;
+}

@@ -65,7 +65,11 @@ public class Anmeldung extends BaseEntity implements Serializable {
 
     @ManyToOne
     @Nullable
-    private Halt nimmtShuttleVon;
+    private Halt haltestelleHinfahrt;
+
+    @ManyToOne
+    @Nullable
+    private Halt haltestelleRueckfahrt;
 
     @OneToOne
     private Entschuldigung entschuldigung;
