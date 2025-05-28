@@ -14,7 +14,9 @@
 <div th:replace="~{fragments/message :: #message}"></div>
 <div class="content py-4">
     <form action="#" class="d-flex flex-column align-items-center" method="post" th:action="@{/anmeldung}" th:object="${anmeldung}">
-        <h2 th:text="'Anmeldung ' + ${anmeldung.event.name}"></h2>
+        <div class="card p-4 mb-4">
+            <h2 th:text="'Anmeldung ' + ${anmeldung.event.name}"></h2>
+        </div>
         <input hidden th:field="*{event}" th:value="${anmeldung.event.id}" type="">
         <div class=" flex-shrink-1">
             <!--                    <div class="d-lg-flex">-->
