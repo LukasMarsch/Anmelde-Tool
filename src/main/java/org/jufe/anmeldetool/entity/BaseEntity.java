@@ -5,6 +5,9 @@ import lombok.Getter;
 
 import java.util.UUID;
 
+/**
+ * Klasse stellt
+ */
 @Getter
 @MappedSuperclass
 public class BaseEntity {

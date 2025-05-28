@@ -12,6 +12,7 @@ import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.event.Event;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Getter
@@ -21,16 +22,14 @@ import java.util.Set;
 @Entity
 public class Shuttle extends BaseEntity implements Serializable {
 
+    LocalDate datum;
+
     @ManyToOne
     private Event event;
 
     @OneToMany(mappedBy = "shuttle")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Set<Halt> hinHaltestellen;
-
-    @OneToMany(mappedBy = "shuttle")
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private Set<Halt> rueckHaltestellen;
+    private Set<Halt> haltestellen;
 
     private String detail;
 

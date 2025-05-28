@@ -49,9 +49,10 @@ public class AnmeldungController {
 
     @GetMapping
     public String getForm(Model model) {
-        model.addAttribute(ENTITY_EVENT, eventService.getNextEvent());
-        model.addAttribute(ENTITY_HALTESTELLEN_HIN, shuttleService.getAllHinHaltestellen());
-        model.addAttribute(ENTITY_HALTESTELLEN_RUECK, shuttleService.getAllRueckHaltestellen());
+        Event e = eventService.getNextEvent();
+        model.addAttribute(ENTITY_EVENT, e);
+        model.addAttribute(ENTITY_HALTESTELLEN_HIN, shuttleService.getAllHaltestellenAmTag(e.getVon()));
+        model.addAttribute(ENTITY_HALTESTELLEN_RUECK, shuttleService.getAllHaltestellenAmTag(e.getBis()));
         LOGGER.trace(() -> String.format("add %s to model as %s", ENTITY_EVENT, eventService.getNextEvent()));
         return VIEW_ANMELDE_FORMULAR;
     }
@@ -79,7 +80,6 @@ public class AnmeldungController {
                     "Wir konnten dir leider keine Email-schicken. Bitte überprüfe deine Email-Adresse oder kontaktieren das JuFe-Team.");
             LOGGER.error(e::getMessage);
         }
-        // todo: auf anreise weiterleiten???
         messages.put(ENTITY_ANMELDUNG, anmeldung);
         model.addAttribute(ENTITY_EVENT, eventService.getNextEvent());
         return new ModelAndView(VIEW_ANMELDE_FORMULAR, messages);
