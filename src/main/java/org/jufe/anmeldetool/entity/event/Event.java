@@ -28,7 +28,7 @@ public class Event extends BaseEntity implements Serializable {
     private LocalDate bis;
 
     @Enumerated(EnumType.STRING)
-    private Mahlzeit erstesMahlzeit;
+    private Mahlzeit ersteMahlzeit;
 
     @Enumerated(EnumType.STRING)
     private Mahlzeit letzteMahlzeit;

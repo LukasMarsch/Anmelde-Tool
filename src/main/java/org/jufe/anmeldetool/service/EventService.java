@@ -42,6 +42,8 @@ public class EventService {
                        .von(LocalDate.of(2018, 1, 1))
                        .bis(LocalDate.of(2018, 1, 3))
                        .shuttles(new HashSet<>())
+                       .ersteMahlzeit(Mahlzeit.ABEND)
+                       .letzteMahlzeit(Mahlzeit.MITTAG)
                        .build();
 
         eventRepository.save(e);
