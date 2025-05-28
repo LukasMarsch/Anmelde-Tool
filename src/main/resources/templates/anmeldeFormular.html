@@ -84,23 +84,29 @@
                 </div>
             </div>
             <div class="card p-4 mb-4 flex-grow-1">
-                <h3 class="card-title">An- Abreise</h3>
+                <h3 class="card-title">Shuttle An- Abreise</h3>
                 <div class="card-body">
                     <div class="form-group pt-1">
-                        <label for="hinfahrt">Haltestelle Hinfahrt</label>
+                        <label for="hinfahrt" th:text="'Hinfahrt am ' + ${#temporals.day(event.von)} + '.' + ${#temporals.month(event.von)}"></label>
                         <select class="form-control" id="hinfahrt" required th:field="*{haltestelleHinfahrt}">
+                            <option default label="Kein Shuttle" selected text="Kein Shuttle" value=""></option>
                             <option th:each="haltestelle : ${haltestellenHin}"
-                                    th:text="${haltestelle.ort.stadt}"
+                                    th:text="${haltestelle.toString()}"
+                                    th:label="${haltestelle.ort.stadt}"
                                     th:value="${haltestelle.id}">
                             </option>
                         </select>
-                        <label for="rueckfahrt">Haltestelle Rückfahrt</label>
+                        <p class="mb-3"><small id="hinfahrtDetail"></small></p>
+                        <label for="rueckfahrt" th:text="'Rückfahrt am ' + ${#temporals.day(event.bis)} + '.' + ${#temporals.month(event.bis)}"></label>
                         <select class="form-control" id="rueckfahrt" required th:field="*{haltestelleRueckfahrt}">
+                            <option default label="Keine" selected text="Keine" value=""></option>
                             <option th:each="haltestelle : ${haltestellenRueck}"
-                                    th:text="${haltestelle.ort.stadt}"
+                                    th:text="${haltestelle.toString()}"
+                                    th:label="${haltestelle.ort.stadt}"
                                     th:value="${haltestelle.id}">
                             </option>
                         </select>
+                        <p><small class="mb-3" id="rueckfahrtDetail"></small></p>
                     </div>
                 </div>
             </div>
@@ -122,8 +128,7 @@
                     </div>
                 </div>
             </div>
-            <!--                    </div>-->
-            <!--                    <div class="d-md-flex">-->
+
             <div class="card p-4 mb-4 flex-grow-1">
                 <h3 class="card-title">Zusätzliche Infos</h3>
                 <div class="card-body">
@@ -190,6 +195,22 @@
             }
         });
     });
+
+    hinfahrt.addEventListener("change", (event) => {
+        if(rueckfahrt.selectedIndex == 0) {
+            hinfahrtDetail.textContent = '';
+        }
+        hinfahrtDetail.textContent = `${hinfahrt.selectedOptions[0].innerText}`;
+    });
+
+    rueckfahrt.addEventListener("change", (event) => {
+        if(rueckfahrt.selectedIndex == 0) {
+            rueckfahrtDetail.textContent = '';
+        }
+        rueckfahrtDetail.textContent = `${rueckfahrt.selectedOptions[0].innerText}`;
+    });
+
+
 </script>
 </body>
 </html>
