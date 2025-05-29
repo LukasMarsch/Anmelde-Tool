@@ -2,8 +2,8 @@ package org.jufe.anmeldetool.service;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.jufe.anmeldetool.entity.anmeldung.Mahlzeit;
 import org.jufe.anmeldetool.entity.event.Event;
-import org.jufe.anmeldetool.entity.event.Mahlzeit;
 import org.jufe.anmeldetool.repository.event.EventRepository;
 import org.jufe.anmeldetool.repository.reise.HaltRepository;
 import org.springframework.cache.annotation.Cacheable;

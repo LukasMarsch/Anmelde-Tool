@@ -42,4 +42,8 @@ public final class ControllerConstants {
 
     public static final String VIEW_EVENT_DETAIL = "admin/eventDetail";
 
+    public static final String ENTITY_EVENT_TAGE = "eventTage";
+
+    public static final String ENTITY_ANY_ABWESEND = "anyAbwesend";
+
 }
