@@ -31,6 +31,9 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+      - uses: ikalnytskyi/action-setup-postgres@v7
+        with:
+          database: anmeldetool
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
