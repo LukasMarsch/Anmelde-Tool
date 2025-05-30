@@ -1,4 +1,4 @@
-package org.jufe.anmeldetool.security;
+package org.jufe.anmeldetool.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
