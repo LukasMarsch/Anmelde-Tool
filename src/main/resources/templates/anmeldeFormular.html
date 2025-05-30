@@ -90,8 +90,8 @@
                 <div class="card-body">
                     <div class="form-group pt-1">
                         <label for="hinfahrt" th:text="'Hinfahrt am ' + ${#temporals.day(event.von)} + '.' + ${#temporals.month(event.von)}"></label>
-                        <select class="form-control" id="hinfahrt" required th:field="*{haltestelleHinfahrt}">
-                            <option default label="Kein Shuttle" selected text="Kein Shuttle" value=""></option>
+                        <select class="form-control" id="hinfahrt" th:field="*{haltestelleHinfahrt}">
+                            <option default label="Kein Shuttle" selected value=""></option>
                             <option th:each="haltestelle : ${haltestellenHin}"
                                     th:label="${haltestelle.ort.stadt}"
                                     th:text="${haltestelle.toString()}"
@@ -100,8 +100,8 @@
                         </select>
                         <p class="mb-3"><small id="hinfahrtDetail"></small></p>
                         <label for="rueckfahrt" th:text="'Rückfahrt am ' + ${#temporals.day(event.bis)} + '.' + ${#temporals.month(event.bis)}"></label>
-                        <select class="form-control" id="rueckfahrt" required th:field="*{haltestelleRueckfahrt}">
-                            <option default label="Keine" selected text="Keine" value=""></option>
+                        <select class="form-control" id="rueckfahrt" th:field="*{haltestelleRueckfahrt}">
+                            <option default label="Kein Shuttle" selected value=""></option>
                             <option th:each="haltestelle : ${haltestellenRueck}"
                                     th:label="${haltestelle.ort.stadt}"
                                     th:text="${haltestelle.toString()}"
@@ -109,6 +109,46 @@
                             </option>
                         </select>
                         <p><small class="mb-3" id="rueckfahrtDetail"></small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="card p-4 mb-4 flex-grow-1">
+                <h3 class="card-title">Abwesenheit</h3>
+                <div class="card-body">
+                    <div class="form-group pt-1">
+                        <!-- Die Logik wird hier für den Nutzer umgedreht
+                            Der Nutzer wird gefragt, "ob er die ganze Zeit anwesend ist"
+                            wir speichern es aber als "Ob er überhaupt abwesend ist"
+                            und verknüpfen die Info dann mit der Datentabelle-->
+                        <div>
+                            <label>Ich bin die ganze Zeit da</label>
+                            <div class="p-1 pt-1">
+                                <label for="falseAbwesend">Ja</label>
+                                <input id="falseAbwesend" name="anyAbwesend" onChange="showOrHideAbwesendTable()" type="radio" value="false">
+                            </div>
+                            <div class="p-1 pt-1">
+                                <label for="trueAbwesend">Nein</label>
+                                <input id="trueAbwesend" name="anyAbwesend" onChange="showOrHideAbwesendTable()" type="radio" value="true">
+                            </div>
+                        </div>
+                        <div class="table-responsive pt-2" id="abwesendTable">
+                            <label for="abwesenheiten">Zu diesen Mahlzeiten bin ich nicht da</label>
+                            <table class="table table-light" id="abwesenheiten" required th:object="${abwesenheiten}">
+                                <thead class="text-center">
+                                <tr>
+                                    <th>Mahlzeit</th>
+                                    <th th:each="day : ${eventTage}" th:text="${#temporals.dayOfWeekName(day)}"></th>
+                                </tr>
+                                </thead>
+                                <tbody class="text-center">
+                                <tr th:each="mahlzeit : ${T(org.jufe.anmeldetool.entity.anmeldung.Mahlzeit).values()}">
+                                    <td th:text="${mahlzeit.displayValue}"></td>
+                                    <td th:each="day : ${eventTage}">
+                                        <input name="abwesend" th:value="${day} + '.' + ${mahlzeit.displayValue}" type="checkbox"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -143,7 +183,7 @@
                             </option>
                         </select>
                     </div>
-                    <div class="form-check form-group pt-1">
+                    <div class="form-check pt-2">
                         <input class="form-check-input" id="schwimmer" th:field="*{schwimmer}" type="checkbox">
                         <label class="form-check-label" for="schwimmer">Schwimmer</label>
                     </div>
@@ -187,6 +227,7 @@
 <script th:inline="javascript">
     var von = new Date([[${event.von}]]);
     var lastBirthday = new Date(von.getFullYear() - 18 , von.getMonth(), von.getDate(), 23, 59, 59); // hasse javascript :)
+
     geburtstag.addEventListener("change", (event) => {
         if(new Date(geburtstag.value) <= lastBirthday) {
             evkdiv.hidden = true;
@@ -209,7 +250,16 @@
         rueckfahrtDetail.textContent = `${rueckfahrt.selectedOptions[0].innerText}`;
     });
 
+    function showOrHideAbwesendTable() {
+        if(falseAbwesend.checked) {
+            abwesendTable.hidden = true;
+        } else {
+            abwesendTable.hidden = false;
+        }
+    }
 
+    falseAbwesend.checked = true;
+    showOrHideAbwesendTable();
 </script>
 </body>
 </html>

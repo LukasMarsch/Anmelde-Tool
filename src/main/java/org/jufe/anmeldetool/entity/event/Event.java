@@ -3,7 +3,9 @@ package org.jufe.anmeldetool.entity.event;
 import jakarta.persistence.*;
 import lombok.*;
 import org.jufe.anmeldetool.entity.BaseEntity;
+import org.jufe.anmeldetool.entity.anmeldung.Abwesend;
 import org.jufe.anmeldetool.entity.anmeldung.Anmeldung;
+import org.jufe.anmeldetool.entity.anmeldung.Mahlzeit;
 import org.jufe.anmeldetool.entity.reise.Shuttle;
 import org.jufe.anmeldetool.wrapper.TeilnehmerStatistik;
 
@@ -33,9 +35,9 @@ public class Event extends BaseEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private Mahlzeit letzteMahlzeit;
 
-    @OneToMany(mappedBy = "event")
+    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
     @OrderBy("tag, mahlzeit")
-    private Set<Essen> essen;
+    private Set<Abwesend> abwesend;
 
     private boolean mitKaffee;
 
@@ -85,13 +87,21 @@ public class Event extends BaseEntity implements Serializable {
         this.shuttles.remove(shuttle);
     }
 
+    public void addAbwesend(Abwesend abwesend) {
+        this.abwesend.add(abwesend);
+    }
+
+    public void removeAbwesend(Abwesend abwesend) {
+        this.abwesend.remove(abwesend);
+    }
+
     public void berechneTeilnehmerStatistik() {
         statistik = TeilnehmerStatistik.berechne(anmeldungen);
     }
 
     public Iterable<Anmeldung> getBestaetigt() {
         var t = new java.util.ArrayList<>(this.anmeldungen.stream()
-                                                          .filter(a -> a.isBestaetigt())
+                                                          .filter(Anmeldung::isBestaetigt)
                                                           .toList());
         t.sort(Comparator.comparing(Anmeldung::getNachname));
         return t;

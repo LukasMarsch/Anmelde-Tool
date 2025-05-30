@@ -5,10 +5,10 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.jufe.address.PostAdresse;
 import org.jufe.anmeldetool.entity.BaseEntity;
 import org.jufe.anmeldetool.entity.entschuldigung.Entschuldigung;
-import org.jufe.anmeldetool.entity.event.Essen;
 import org.jufe.anmeldetool.entity.event.Event;
 import org.jufe.anmeldetool.entity.reise.Halt;
 import org.springframework.lang.NonNull;
@@ -48,8 +48,9 @@ public class Anmeldung extends BaseEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     private Isst isst;
 
-    @ManyToMany
-    private Set<Essen> mahlzeitenAnwesend;
+    @OneToMany(mappedBy = "anmeldung", orphanRemoval = true, fetch = FetchType.LAZY)
+    @Cascade({org.hibernate.annotations.CascadeType.ALL})
+    private Set<Abwesend> mahlzeitenAbwesend;
 
     private boolean schwimmer = false;
 
@@ -87,12 +88,12 @@ public class Anmeldung extends BaseEntity implements Serializable {
         this.event = event;
     }
 
-    public void addEssen(Essen essen) {
-        mahlzeitenAnwesend.add(essen);
+    public void addAbwesend(Abwesend abwesend) {
+        mahlzeitenAbwesend.add(abwesend);
     }
 
-    public void removeEssen(Essen essen) {
-        mahlzeitenAnwesend.remove(essen);
+    public void removeAbwesend(Abwesend abwesend) {
+        mahlzeitenAbwesend.remove(abwesend);
     }
 
     public Alter alter() throws IllegalArgumentException {
