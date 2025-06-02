@@ -29,6 +29,12 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: maven
+      - name: Set up SSH for git access
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
       - uses: ikalnytskyi/action-setup-postgres@v7
         with:
           database: anmeldetool
@@ -46,6 +52,5 @@ jobs:
           GIT_AUTHOR_EMAIL: github-actions@github.com
           GIT_COMMITTER_NAME: github-actions
           GIT_COMMITTER_EMAIL: github-actions@github.com
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@v5
