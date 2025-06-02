@@ -4,13 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class AnmeldetoolApplicationTests {
+public class AnmeldetoolApplicationTests {
 
+	/**
+	 * Diese Methode prüft das Starten des Spring Kontextes
+	 */
 	@Test
-	void contextLoads() {
-		/**
-		 * Diese Methode darf leer sein, da sie nur das Starten des Spring Kontextes prüft
-		 */
-	}
+	public void contextLoads() {}
 
 }
