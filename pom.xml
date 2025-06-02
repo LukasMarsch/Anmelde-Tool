@@ -200,5 +200,5 @@
                 <scmBranch>gh-pages</scmBranch>
             </configuration>
         </plugin>
-    </pluginManagement
+    </pluginManagement>
 </project>
