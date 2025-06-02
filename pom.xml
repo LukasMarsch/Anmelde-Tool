@@ -201,4 +201,29 @@
               </plugin>
         </plugins>
     </build>
+    <developers>
+        <developer>
+            <id>LukasMarsch</id>
+            <name>Lukas Marsch</name>
+            <email>marschlukas@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+                <role>Architect</role>
+            </roles>
+            <timezone>Europe/Berlin</timezone>
+            <properties>
+                <picUrl>https://avatars.githubusercontent.com/u/50878285?s=400&u=c18e9e6a0dae33735fb1b7019d4f29cddab2b20e&v=4</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <id>hornflip</id>
+            <name>Phillip Kranz</name>
+            <email>phillip.kranz@stud.tu-darmstadt.de</email>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Europe/Berlin</timezone>
+        </developer>
+    </developers>
 </project>
