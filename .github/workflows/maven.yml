@@ -79,6 +79,6 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
-      - run: ls ${{ github.workspace }}
+      - run: file ${{ github.workspace }}/mvnw
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@v5
