@@ -28,7 +28,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
+          cache: 'maven'
       - name: Set up SSH for git access
         run: |
           mkdir -p ~/.ssh
