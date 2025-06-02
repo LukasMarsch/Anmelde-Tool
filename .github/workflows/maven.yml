@@ -35,6 +35,22 @@ jobs:
           echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - name: Set up SSH in config.xml
+        run: |
+          cat > $HOME/.m2/settings.xml <<EOF
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+          https://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <servers>
+            <server>
+              <id>github</id>
+              <privateKey>/home/runner/.ssh/id_ed25519</privateKey>
+              <passphrase></passphrase>
+            </server>
+          </servers>
+          </settings>
+          EOF
       - uses: ikalnytskyi/action-setup-postgres@v7
         with:
           database: anmeldetool
