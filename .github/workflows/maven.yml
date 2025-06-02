@@ -40,6 +40,12 @@ jobs:
           path: |
             **/target
       - name: Deploy Site Report
-        run: mvn clean site site:stage scm-publish:publish-scm
+        run: mvn -B clean site site:stage scm-publish:publish-scm
+        env:
+          GIT_AUTHOR_NAME: github-actions
+          GIT_AUTHOR_EMAIL: github-actions@github.com
+          GIT_COMMITTER_NAME: github-actions
+          GIT_COMMITTER_EMAIL: github-actions@github.com
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@v5
