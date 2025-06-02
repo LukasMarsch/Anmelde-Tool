@@ -79,6 +79,6 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
           cache: 'maven'
-      - run: ls /home/runner/Anmelde-Tool/Anmelde-Tool/
+      - run: ls /home/runner/Anmelde-Tool/
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@v5
