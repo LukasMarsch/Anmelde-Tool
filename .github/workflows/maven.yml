@@ -61,10 +61,6 @@ jobs:
           name: maven-artifacts
           path: |
             **/target
-      - name: Update dependency graph
-        uses: advanced-security/maven-dependency-submission-action@v5
-        with:
-          directory: /home/runner/work/Anmelde-Tool/
       - name: Deploy Site Report
         run: mvn -B clean site site:stage scm-publish:publish-scm
         env:
@@ -72,3 +68,16 @@ jobs:
           GIT_AUTHOR_EMAIL: github-actions@github.com
           GIT_COMMITTER_NAME: github-actions
           GIT_COMMITTER_EMAIL: github-actions@github.com
+
+  scan-dependency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Update dependency graph
+        uses: advanced-security/maven-dependency-submission-action@v5
