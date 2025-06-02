@@ -63,6 +63,8 @@ jobs:
             **/target
       - name: Update dependency graph
         uses: advanced-security/maven-dependency-submission-action@v5
+        with:
+          directory: /home/runner/work/Anmelde-Tool/
       - name: Deploy Site Report
         run: mvn -B clean site site:stage scm-publish:publish-scm
         env:
