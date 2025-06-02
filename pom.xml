@@ -189,16 +189,13 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.1.2</version>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <configuration>
+                    <scmBranch>gh-pages</scmBranch>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
-
-    <pluginManagement>
-        <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-scm-publish-plugin</artifactId>
-            <configuration>
-                <scmBranch>gh-pages</scmBranch>
-            </configuration>
-        </plugin>
-    </pluginManagement>
 </project>
