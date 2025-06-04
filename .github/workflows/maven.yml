@@ -20,38 +20,65 @@ permissions:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v4
-      - name: Set up JDK 21
+      - name: Set Up JDK
         uses: actions/setup-java@v4
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: maven
+          cache: 'maven'
+      - name: Set up SSH for git access
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_TOKEN }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - name: Set up SSH in config.xml
+        run: |
+          cat > $HOME/.m2/settings.xml <<EOF
+          <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+          https://maven.apache.org/xsd/settings-1.0.0.xsd">
+          <servers>
+            <server>
+              <id>github</id>
+              <privateKey>/home/runner/.ssh/id_ed25519</privateKey>
+              <passphrase></passphrase>
+            </server>
+          </servers>
+          </settings>
+          EOF
       - uses: ikalnytskyi/action-setup-postgres@v7
         with:
           database: anmeldetool
-      - name: Build with Maven
-        run: mvn -B package --file pom.xml
-
-      # Upload all necessary artifacts (jar, war, ear, and test reports)
+      - run: mvn -B verify --file pom.xml
       - name: Upload Maven build artifacts
         uses: actions/upload-artifact@v4
         with:
           name: maven-artifacts
           path: |
-            **/target/*.jar
-            **/target/*.war
-            **/target/*.ear
-            **/target/*.zip
-            **/target/*.tar.gz
-            **/target/surefire-reports/
-            **/target/failsafe-reports/
-            **/target/site/
+            **/target
+      - name: Deploy Site Report
+        run: mvn -B clean site site:stage scm-publish:publish-scm
+        env:
+          GIT_AUTHOR_NAME: github-actions
+          GIT_AUTHOR_EMAIL: github-actions@github.com
+          GIT_COMMITTER_NAME: github-actions
+          GIT_COMMITTER_EMAIL: github-actions@github.com
 
-      # Optional: Uploads the full dependency graph to GitHub to improve the quality of Dependabot alerts this repository can receive
+  scan-dependency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set Up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+      - run: chmod +x ${{ github.workspace }}/mvnw
       - name: Update dependency graph
-        uses: advanced-security/maven-dependency-submission-action@571e99aab1055c2e71a1e2309b9691de18d6b7d6
+        uses: advanced-security/maven-dependency-submission-action@v5

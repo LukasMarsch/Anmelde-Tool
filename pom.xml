@@ -1,33 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.4</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>3.4.4</version> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.jufe</groupId>
     <artifactId>anmeldetool</artifactId>
     <version>0.0.3-SNAPSHOT</version>
     <name>anmeldetool</name>
     <description>Told</description>
-    <url/>
+    
     <licenses>
-        <license/>
+        <license />
     </licenses>
-    <developers>
-        <developer/>
-    </developers>
+    
     <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
     </scm>
+
+    <distributionManagement>
+        <site>
+            <id>github</id>
+            <url>scm:git:git@github.com:LukasMarsch/anmelde-tool.git</url>
+        </site>
+    </distributionManagement>
+
     <properties>
         <java.version>21</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
     <dependencies>
         <dependency>
@@ -112,6 +113,44 @@
         </dependency>
     </dependencies>
 
+    <reporting>
+        <plugins>
+            <!-- Surefire Test Report -->
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-report-plugin</artifactId>
+            </plugin>
+
+            <!-- Javadoc -->
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+
+            <!-- Checkstyle -->
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-checkstyle-plugin</artifactId>
+            </plugin>
+
+            <!-- PMD -->
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-pmd-plugin</artifactId>
+            </plugin>
+
+            <!-- OWASP Dependency Check -->
+            <plugin>
+            <groupId>org.owasp</groupId>
+            <artifactId>dependency-check-maven</artifactId>
+            <version>8.4.0</version> <!-- aktuelle Version prüfen -->
+            </plugin>
+            <plugin>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </reporting>
+
     <build>
         <plugins>
             <plugin>
@@ -138,7 +177,49 @@
                     </excludes>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.1.2</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-scm-publish-plugin</artifactId>
+                <configuration>
+                    <scmBranch>gh-pages</scmBranch>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-site-plugin</artifactId>
+                <configuration>
+                  <locales>en,de</locales>
+                </configuration>
+              </plugin>
         </plugins>
     </build>
-
+    <developers>
+        <developer>
+            <id>LukasMarsch</id>
+            <name>Lukas Marsch</name>
+            <email>marschlukas@gmail.com</email>
+            <roles>
+                <role>Developer</role>
+                <role>Architect</role>
+            </roles>
+            <timezone>Europe/Berlin</timezone>
+            <properties>
+                <picUrl>https://avatars.githubusercontent.com/u/50878285</picUrl>
+            </properties>
+        </developer>
+        <developer>
+            <id>hornflip</id>
+            <name>Phillip Kranz</name>
+            <email>phillip.kranz@stud.tu-darmstadt.de</email>
+            <roles>
+                <role>Architect</role>
+                <role>Developer</role>
+            </roles>
+            <timezone>Europe/Berlin</timezone>
+        </developer>
+    </developers>
 </project>
